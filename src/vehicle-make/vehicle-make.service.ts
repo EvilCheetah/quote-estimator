@@ -7,7 +7,7 @@ import { UpdateMakeDTO } from './dto/update-make.dto';
 
 
 @Injectable()
-export class MakeService
+export class VehicleMakeService
 {
     constructor(
         private readonly prisma: PrismaService

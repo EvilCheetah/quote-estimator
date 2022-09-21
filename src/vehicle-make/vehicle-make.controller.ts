@@ -1,14 +1,15 @@
 import { Make } from '@prisma/client';
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
-import { MakeService } from './make.service';
+import { VehicleMakeService } from './vehicle-make.service';
+
 import { CreateMakeDTO } from './dto/create-make.dto';
 import { UpdateMakeDTO } from './dto/update-make.dto';
 
 
 @Controller('make')
-export class MakeController
+export class VehicleMakeController
 {
-    constructor(private readonly makeService: MakeService) {}
+    constructor(private readonly makeService: VehicleMakeService) {}
 
 
     @Post()
