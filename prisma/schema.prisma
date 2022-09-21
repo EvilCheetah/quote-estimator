@@ -1,0 +1,39 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+model Make {
+    year        Int
+
+    make_id     Int     @id
+    make_name   String
+
+    models      Model[]
+}
+
+model Model {
+    model_id    Int         @id
+    model_name  String
+
+    make        Make        @relation(fields: [make_id], references: [make_id], onDelete: Cascade)
+    make_id     Int
+
+    dimensions  Dimensions?
+    weight      Int
+}
+
+model Dimensions {
+    dimensions_id   Int   @id
+
+    model           Model @relation(fields: [model_id], references: [model_id], onDelete: Cascade)
+    model_id        Int   @unique
+
+    length          Float
+    width           Float
+    height          Float
+}
