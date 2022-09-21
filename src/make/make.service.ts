@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMakeDto } from './dto/create-make.dto';
-import { UpdateMakeDto } from './dto/update-make.dto';
+import { CreateMakeDTO } from './dto/create-make.dto';
+import { UpdateMakeDTO } from './dto/update-make.dto';
+
 
 @Injectable()
-export class MakeService {
-  create(createMakeDto: CreateMakeDto) {
-    return 'This action adds a new make';
-  }
+export class MakeService
+{
+    create(createMakeDTO: CreateMakeDTO)
+    {
+        return 'This action adds a new make';
+    }
 
-  findAll() {
-    return `This action returns all make`;
-  }
+    find_all()
+    {
+        return `This action returns all make`;
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} make`;
-  }
+    find_one(make_id: number)
+    {
+        return `This action returns a #${make_id} make`;
+    }
 
-  update(id: number, updateMakeDto: UpdateMakeDto) {
-    return `This action updates a #${id} make`;
-  }
+    update(make_id: number, updateMakeDTO: UpdateMakeDTO)
+    {
+        return `This action updates a #${make_id} make`;
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} make`;
-  }
+    remove(make_id: number)
+    {
+        return `This action removes a #${make_id} make`;
+    }
 }
