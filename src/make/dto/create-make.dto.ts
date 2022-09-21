@@ -1,1 +1,1 @@
-export class CreateMakeDto {}
+export class CreateMakeDTO {}

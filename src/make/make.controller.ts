@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MakeService } from './make.service';
-import { CreateMakeDto } from './dto/create-make.dto';
-import { UpdateMakeDto } from './dto/update-make.dto';
+import { CreateMakeDTO } from './dto/create-make.dto';
+import { UpdateMakeDTO } from './dto/update-make.dto';
 
 @Controller('make')
 export class MakeController
@@ -9,27 +9,27 @@ export class MakeController
     constructor(private readonly makeService: MakeService) {}
 
     @Post()
-    create(@Body() createMakeDto: CreateMakeDto)
+    create(@Body() createMakeDTO: CreateMakeDTO)
     {
-        return this.makeService.create(createMakeDto);
+        return this.makeService.create(createMakeDTO);
     }
 
     @Get()
-    findAll()
+    find_all()
     {
         return this.makeService.findAll();
     }
 
     @Get(':make_id')
-    findOne(@Param('make_id') id: string)
+    find_one(@Param('make_id') id: string)
     {
         return this.makeService.findOne(+id);
     }
 
     @Patch(':make_id')
-    update(@Param('make_id') id: string, @Body() updateMakeDto: UpdateMakeDto)
+    update(@Param('make_id') id: string, @Body() updateMakeDTO: UpdateMakeDTO)
     {
-        return this.makeService.update(+id, updateMakeDto);
+        return this.makeService.update(+id, updateMakeDTO);
     }
 
     @Delete(':make_id')
