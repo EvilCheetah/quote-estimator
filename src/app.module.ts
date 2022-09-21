@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { MakeModule } from './make/make.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { PrismaService } from './prisma/prisma.service';
+import { VehicleMakeModule } from './vehicle-make/vehicle-make.module';
 
 
 @Module({
     imports: [
         PrismaModule,
-        MakeModule
+        VehicleMakeModule
     ]
 })
 export class AppModule {}
