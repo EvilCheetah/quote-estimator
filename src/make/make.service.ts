@@ -1,4 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+
 import { CreateMakeDTO } from './dto/create-make.dto';
 import { UpdateMakeDTO } from './dto/update-make.dto';
 
@@ -6,28 +8,52 @@ import { UpdateMakeDTO } from './dto/update-make.dto';
 @Injectable()
 export class MakeService
 {
-    create(createMakeDTO: CreateMakeDTO)
+    constructor(
+        private readonly prisma: PrismaService
+    ) {}
+
+    async create(createMakeDTO: CreateMakeDTO)
     {
-        return 'This action adds a new make';
+        const {make_name, year} = createMakeDTO;
+
+        return this.prisma.make.create({
+            data: { make_name, year }
+        })
     }
 
-    find_all()
+    async find_all()
     {
-        return `This action returns all make`;
+        return this.prisma.make.findMany();
     }
 
-    find_one(make_id: number)
+    async find_one(make_id: number)
     {
-        return `This action returns a #${make_id} make`;
+        const make = await this.prisma.make.findUnique({
+            where: { make_id }
+        });
+
+        if ( !make )
+            throw new NotFoundException(`Make with id: ${make_id} was NOT FOUND`);
+        
+        return make;
     }
 
-    update(make_id: number, updateMakeDTO: UpdateMakeDTO)
+    async update(make_id: number, updateMakeDTO: UpdateMakeDTO)
     {
-        return `This action updates a #${make_id} make`;
+        const make = await this.find_one(make_id);
+
+        return this.prisma.make.update({
+            where: { make_id },
+            data:  updateMakeDTO
+        });
     }
 
-    remove(make_id: number)
+    async remove(make_id: number)
     {
-        return `This action removes a #${make_id} make`;
+        const make = await this.find_one(make_id);
+
+        return this.prisma.make.delete({
+            where: { make_id }
+        });
     }
 }
