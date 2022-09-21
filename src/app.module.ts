@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { MakeModule } from './make/make.module';
 
 
 @Module({
-    imports:     [],
+    imports:     [MakeModule],
     controllers: [],
     providers:   [],
 })
