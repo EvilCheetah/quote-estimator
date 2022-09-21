@@ -8,16 +8,16 @@ datasource db {
 }
 
 model Make {
-    year        Int
-
-    make_id     Int     @id
+    make_id     Int     @id @default(autoincrement())
+    
     make_name   String
+    year        Int
 
     models      Model[]
 }
 
 model Model {
-    model_id    Int         @id
+    model_id    Int         @id @default(autoincrement())
     model_name  String
 
     make        Make        @relation(fields: [make_id], references: [make_id], onDelete: Cascade)
@@ -28,7 +28,7 @@ model Model {
 }
 
 model Dimensions {
-    dimensions_id   Int   @id
+    dimensions_id   Int   @id   @default(autoincrement())
 
     model           Model @relation(fields: [model_id], references: [model_id], onDelete: Cascade)
     model_id        Int   @unique
