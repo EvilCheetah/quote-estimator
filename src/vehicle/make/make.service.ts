@@ -7,7 +7,7 @@ import { UpdateMakeDTO } from './dto/update-make.dto';
 
 
 @Injectable()
-export class VehicleMakeService
+export class MakeService
 {
     constructor(
         private readonly prisma: PrismaService
@@ -15,10 +15,8 @@ export class VehicleMakeService
 
     async create(createMakeDTO: CreateMakeDTO): Promise<Make>
     {
-        const {make_name, year} = createMakeDTO;
-
         return this.prisma.make.create({
-            data: { make_name, year }
+            data: createMakeDTO
         })
     }
 
