@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStateDto } from './dto/create-state.dto';
-import { UpdateStateDto } from './dto/update-state.dto';
+import { CreateStateDTO } from './dto/create-state.dto';
+import { UpdateStateDTO } from './dto/update-state.dto';
 
 
 @Injectable()
 export class StateService
 {
-    create(createStateDto: CreateStateDto)
+    create(createStateDTO: CreateStateDTO)
     {
         return 'This action adds a new state';
     }
@@ -21,7 +21,7 @@ export class StateService
         return `This action returns a #${id} state`;
     }
 
-    update(id: number, updateStateDto: UpdateStateDto)
+    update(id: number, updateStateDTO: UpdateStateDTO)
     {
         return `This action updates a #${id} state`;
     }
