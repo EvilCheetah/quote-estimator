@@ -36,4 +36,7 @@ lerna-debug.log*
 
 # Sensitive information
 .env
+
+# Ignore SQLite artifacts
 *.db
+*.db-journal
