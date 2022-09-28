@@ -1,7 +1,7 @@
 import { IsString, MaxLength, MinLength } from "class-validator";
 
 
-export class CreateStateDto
+export class CreateStateDTO
 {
     @IsString()
     state_name:         string;
