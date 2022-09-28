@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { City } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCityDTO } from './dto/create-city.dto';
 import { UpdateCityDTO } from './dto/update-city.dto';
@@ -11,19 +12,19 @@ export class CityService
         private readonly prisma: PrismaService
     ) {}
 
-    create(createCityDTO: CreateCityDTO)
+    create(createCityDTO: CreateCityDTO): Promise<City>
     {
         return this.prisma.city.create({
             data: createCityDTO
         });
     }
 
-    findAll()
+    findAll(): Promise<City[]>
     {
         return this.prisma.city.findMany();
     }
 
-    async findOne(city_id: number)
+    async findOne(city_id: number): Promise<City>
     {
         const city = await this.prisma.city.findUnique({
             where: { city_id }
@@ -35,7 +36,7 @@ export class CityService
         return city;
     }
 
-    async update(city_id: number, updateCityDTO: UpdateCityDTO)
+    async update(city_id: number, updateCityDTO: UpdateCityDTO): Promise<City>
     {
         const city = await this.findOne(city_id);
 
@@ -45,7 +46,7 @@ export class CityService
         })
     }
 
-    async remove(city_id: number)
+    async remove(city_id: number): Promise<City>
     {
         const city = await this.findOne(city_id);
 

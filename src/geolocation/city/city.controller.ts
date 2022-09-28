@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { City } from '@prisma/client';
 import { CityService } from './city.service';
 import { CreateCityDTO } from './dto/create-city.dto';
 import { UpdateCityDTO } from './dto/update-city.dto';
@@ -13,13 +14,13 @@ export class CityController
     create(
         @Body()
         createCityDTO: CreateCityDTO
-    )
+    ): Promise<City>
     {
         return this.cityService.create(createCityDTO);
     }
 
     @Get()
-    findAll()
+    findAll(): Promise<City[]>
     {
         return this.cityService.findAll();
     }
@@ -28,7 +29,7 @@ export class CityController
     findOne(
         @Param('city_id', ParseIntPipe)
         city_id: number
-    )
+    ): Promise<City>
     {
         return this.cityService.findOne(city_id);
     }
@@ -40,7 +41,7 @@ export class CityController
         
         @Body()
         updateCityDTO: UpdateCityDTO
-    )
+    ): Promise<City>
     {
         return this.cityService.update(city_id, updateCityDTO);
     }
@@ -49,7 +50,7 @@ export class CityController
     remove(
         @Param('id', ParseIntPipe)
         city_id: number
-    )
+    ): Promise<City>
     {
         return this.cityService.remove(city_id);
     }
