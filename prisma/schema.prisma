@@ -1,3 +1,4 @@
+//--------------------- Prisma Boilerplate ---------------------//
 generator client {
     provider = "prisma-client-js"
 }
@@ -7,6 +8,8 @@ datasource db {
     url      = "file:./dev.db"
 }
 
+
+//--------------------- Vehicle Schema ---------------------//
 model Make {
     make_id     Int     @id @default(autoincrement())
     
@@ -36,4 +39,60 @@ model Dimensions {
     length          Float
     width           Float
     height          Float
+}
+
+
+//--------------------- Geolocation Schema ---------------------//
+model State {
+    state_id            Int     @id @default(autoincrement())
+    state_name          String
+    state_abbreviation  String
+
+    cities              City[]
+
+    @@unique([state_name])
+}
+
+model City {
+    city_id         Int     @id @default(autoincrement())
+    city_name       String
+    
+    state           State   @relation(fields: [state_id], references: [state_id], onDelete: Cascade)
+    state_id        Int
+
+    postal_codes    PostalCode[]
+
+    @@unique([state_id, city_name])
+}
+
+model PostalCode {
+    postal_code_id      Int       @id @default(autoincrement())
+    postal_code_value   String
+
+    city                City      @relation(fields: [city_id], references: [city_id], onDelete: Cascade)
+    city_id             Int
+
+    latitude            Float
+    longitude           Float
+
+    positions_one       Distance[] @relation("position_one")
+    positions_two       Distance[] @relation("position_two")
+
+    @@unique([postal_code_value])
+}
+
+model Distance {
+    distance_id  Int   @id @default(autoincrement())
+
+    postal_code_one PostalCode @relation("position_one", fields: [position_one], references: [postal_code_id], onDelete: Cascade)
+    position_one    Int
+
+    postal_code_two PostalCode @relation("position_two", fields: [position_two], references: [postal_code_id], onDelete: Cascade)
+    position_two    Int
+
+    air_distance    Float
+    ground_distance Float
+
+
+    @@unique([position_one, position_two])
 }
