@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { StateService } from './state.service';
 import { CreateStateDTO } from './dto/create-state.dto';
 import { UpdateStateDTO } from './dto/update-state.dto';
@@ -10,7 +10,10 @@ export class StateController
     constructor(private readonly stateService: StateService) {}
 
     @Post()
-    create(@Body() createStateDTO: CreateStateDTO)
+    create(
+        @Body()
+        createStateDTO: CreateStateDTO
+    )
     {
         return this.stateService.create(createStateDTO);
     }
@@ -21,21 +24,33 @@ export class StateController
         return this.stateService.findAll();
     }
 
-    @Get(':id')
-    findOne(@Param('id') id: string)
+    @Get(':state_id')
+    findOne(
+        @Param('state_id', ParseIntPipe)
+        state_id: number
+    )
     {
-        return this.stateService.findOne(+id);
+        return this.stateService.findOne(state_id);
     }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateStateDTO: UpdateStateDTO)
+    @Patch(':state_id')
+    update(
+        @Param('state_id', ParseIntPipe)
+        state_id: number, 
+        
+        @Body()
+        updateStateDTO: UpdateStateDTO
+    )
     {
-        return this.stateService.update(+id, updateStateDTO);
+        return this.stateService.update(state_id, updateStateDTO);
     }
 
-    @Delete(':id')
-    remove(@Param('id') id: string)
+    @Delete(':state_id')
+    remove(
+        @Param('state_id', ParseIntPipe)
+        state_id: number
+    )
     {
-        return this.stateService.remove(+id);
+        return this.stateService.remove(state_id);
     }
 }
