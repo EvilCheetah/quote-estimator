@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStateDTO } from './dto/create-state.dto';
 import { UpdateStateDTO } from './dto/update-state.dto';
 
@@ -6,28 +7,50 @@ import { UpdateStateDTO } from './dto/update-state.dto';
 @Injectable()
 export class StateService
 {
+    constructor(
+        private readonly prisma: PrismaService
+    ) {}
+
     create(createStateDTO: CreateStateDTO)
     {
-        return 'This action adds a new state';
+        return this.prisma.state.create({
+            data: createStateDTO
+        })
     }
 
     findAll()
     {
-        return `This action returns all state`;
+        return this.prisma.state.findMany();
     }
 
-    findOne(id: number)
+    async findOne(state_id: number)
     {
-        return `This action returns a #${id} state`;
+        const state = await this.prisma.state.findUnique({
+            where: { state_id }
+        });
+
+        if ( !state )
+            throw new NotFoundException(`State with id: '${state_id}' was NOT FOUND`)
+        
+        return state;
     }
 
-    update(id: number, updateStateDTO: UpdateStateDTO)
+    async update(state_id: number, updateStateDTO: UpdateStateDTO)
     {
-        return `This action updates a #${id} state`;
+        const state = await this.findOne(state_id);
+
+        return this.prisma.state.update({
+            where: { state_id: state.state_id },
+            data:    updateStateDTO
+        })
     }
 
-    remove(id: number)
+    async remove(state_id: number)
     {
-        return `This action removes a #${id} state`;
+        const state = await this.findOne(state_id);
+
+        return this.prisma.state.delete({
+            where: { state_id: state.state_id }
+        })
     }
 }
