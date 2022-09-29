@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { State } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStateDTO } from './dto/create-state.dto';
 import { UpdateStateDTO } from './dto/update-state.dto';
@@ -11,19 +12,19 @@ export class StateService
         private readonly prisma: PrismaService
     ) {}
 
-    create(createStateDTO: CreateStateDTO)
+    create(createStateDTO: CreateStateDTO): Promise<State>
     {
         return this.prisma.state.create({
             data: createStateDTO
         })
     }
 
-    findAll()
+    findAll(): Promise<State[]>
     {
         return this.prisma.state.findMany();
     }
 
-    async findOne(state_id: number)
+    async findOne(state_id: number): Promise<State>
     {
         const state = await this.prisma.state.findUnique({
             where: { state_id }
@@ -35,7 +36,7 @@ export class StateService
         return state;
     }
 
-    async update(state_id: number, updateStateDTO: UpdateStateDTO)
+    async update(state_id: number, updateStateDTO: UpdateStateDTO): Promise<State>
     {
         const state = await this.findOne(state_id);
 
@@ -45,7 +46,7 @@ export class StateService
         })
     }
 
-    async remove(state_id: number)
+    async remove(state_id: number): Promise<State>
     {
         const state = await this.findOne(state_id);
 
