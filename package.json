@@ -58,6 +58,9 @@
     "typescript": "^4.7.4",
     "webpack": "^5.0.0"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",
