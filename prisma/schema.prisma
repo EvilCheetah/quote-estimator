@@ -9,6 +9,13 @@ datasource db {
 }
 
 
+//--------------------- User Schema ---------------------//
+model User {
+    user_id  Int     @id     @default(autoincrement())
+    email    String  @unique
+    password String?
+}
+
 //--------------------- Vehicle Schema ---------------------//
 model Make {
     make_id     Int     @id @default(autoincrement())
