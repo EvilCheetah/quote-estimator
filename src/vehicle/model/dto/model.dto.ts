@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
 import { IsInt, IsNumber, IsString, ValidateNested } from "class-validator";
 
-import { Dimensions } from "src/common/interface/dimensions.dto";
+import { Dimensions } from "src/common/interface/dimensions.interface";
 import { DimensionsDTO } from "src/common/dto/dimensions.dto";
 
 
