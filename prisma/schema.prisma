@@ -4,16 +4,24 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     url      = "file:./dev.db"
 }
 
 
 //--------------------- User Schema ---------------------//
+enum Role {
+    USER
+    ADMIN
+}
+
 model User {
     user_id  Int     @id     @default(autoincrement())
+    username String  @unique
     email    String  @unique
     password String?
+
+    role     Role    @default(USER)
 }
 
 //--------------------- Vehicle Schema ---------------------//
