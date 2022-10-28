@@ -67,7 +67,8 @@
     "webpack": "^5.0.0"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts", 
+    "create-super-user": "ts-node prisma/create-super-user.ts"
   },
   "jest": {
     "moduleFileExtensions": [
