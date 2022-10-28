@@ -2,9 +2,6 @@ import { PrismaClient, State } from "@prisma/client";
 import { STATES } from "./data/states";
 
 
-const prisma = new PrismaClient();
-
-
 async function seed(prisma: PrismaClient)
 {
     ///--------------- Populate States ---------------///
@@ -29,9 +26,10 @@ async function seed(prisma: PrismaClient)
 
 
 async function main() {
+    const prisma = new PrismaClient();
+
     try
     {
-        const prisma = new PrismaClient();
         await seed(prisma)
     }
     
