@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 
 
 async function create_super_user(prisma: PrismaClient)
@@ -8,7 +8,8 @@ async function create_super_user(prisma: PrismaClient)
         data: {
             username: process.env.SUPER_USER_USERNAME,
             email:    process.env.SUPER_USER_EMAIL,
-            password: process.env.SUPER_USER_PASSWORD
+            password: process.env.SUPER_USER_PASSWORD,
+            role:     Role.ADMIN
         }
     });
 }
