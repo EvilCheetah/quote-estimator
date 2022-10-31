@@ -1,4 +1,8 @@
 {
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -9,7 +13,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -18,9 +22,12 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-        "@common/*": ["src/common/*"],
+        "@common/*": ["common/*"],
+        "@constant/*": ["common/constant/*"],
+        "@decorator/*": ["common/decorator/*"],
 
-        "@common/constant": ["src/common/constant/index"],
+        "@constant": ["common/constant/index"],
+        "@decorator": ["common/decorator/index"]
     },
   }
 }
