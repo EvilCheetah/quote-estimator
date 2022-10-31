@@ -1,5 +1,4 @@
 import { buildMessage, isString, matches, ValidateBy, ValidationOptions } from "class-validator";
-
 import { USERNAME_PATTERN } from "@common/constant";
 
 
@@ -25,5 +24,5 @@ export function IsUsername(validationOptions?: ValidationOptions)
                 validationOptions
             )
         }
-    })
+    });
 }

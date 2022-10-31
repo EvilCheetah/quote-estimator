@@ -1,4 +1,4 @@
-import { buildMessage, isNumber, registerDecorator, ValidateBy, ValidationOptions } from "class-validator";
+import { buildMessage, isNumber, ValidateBy, ValidationOptions } from "class-validator";
 
 
 export const IS_NON_NEGATIVE = 'isNonNegative';
@@ -23,5 +23,5 @@ export function IsNonNegative(validationOptions?: ValidationOptions)
                 validationOptions
             )
         }
-    })
+    });
 }
