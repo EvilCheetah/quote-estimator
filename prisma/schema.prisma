@@ -16,12 +16,13 @@ enum Role {
 }
 
 model User {
-    user_id  Int     @id     @default(autoincrement())
-    username String  @unique
-    email    String  @unique
-    password String?
+    user_id       Int     @id     @default(autoincrement())
+    username      String  @unique
+    email         String  @unique
+    password      String?
+    refresh_token String?
 
-    role     Role    @default(USER)
+    role          Role    @default(USER)
 }
 
 //--------------------- Vehicle Schema ---------------------//
