@@ -1,19 +1,37 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserDTO } from './dto/create-user.dto';
-import { UpdateUserDTO } from './dto/update-user.dto';
+import bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { ConflictException, Injectable } from '@nestjs/common';
+
+import { User } from '@prisma/client';
+import { NewUserDTO } from '@common/dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 
 @Injectable()
 export class UsersService
 {
     constructor(
-        private readonly prisma: PrismaService
+        private readonly prisma:        PrismaService,
+        private readonly configService: ConfigService
     ) {}
 
-    create(createUserDTO: CreateUserDTO)
+    async create(new_user: NewUserDTO): Promise<User>
     {
-        return 'This action adds a new user';
+        const { password, confirm_password, ...user_data } = new_user;
+
+        this._check_for_conflicts( user_data );
+
+        const password_hash = await bcrypt.hash(
+            password,
+            this.configService.get<number>('SALT_ROUNDS')
+        );
+
+        return this.prisma.user.create({ 
+            data: {
+                ...user_data,
+                password: password_hash
+            }
+        });
     }
 
     findAll()
@@ -28,7 +46,29 @@ export class UsersService
         });
     }
 
-    update(id: number, updateUserDTO: UpdateUserDTO)
+    findOneByUsername(username: string)
+    {
+        return this.prisma.user.findUnique({
+            where: { username }
+        });
+    }
+
+    async updateRefreshToken(user_id: number, refresh_token: string)
+    {
+        const refresh_token_hash = await bcrypt.hash(
+            refresh_token, 
+            this.configService.get<number>('SALT_ROUNDS')
+        );
+
+        await this.prisma.user.update({
+            where: { user_id },
+            data:  {
+                refresh_token: refresh_token_hash
+            }
+        });
+    }
+
+    update(id: number)
     {
         return `This action updates a #${id} user`;
     }
@@ -36,5 +76,18 @@ export class UsersService
     remove(id: number)
     {
         return `This action removes a #${id} user`;
+    }
+
+    private async _check_for_conflicts(user_data: Partial<User>)
+    {
+        const email_is_taken    = await this.findOneByEmail( user_data.email );
+
+        if ( email_is_taken )
+            throw new ConflictException(`Email is already taken`);
+
+        const username_is_taken = await this.findOneByUsername( user_data.username );
+
+        if ( username_is_taken )
+            throw new ConflictException(`Username is already taken`);
     }
 }
