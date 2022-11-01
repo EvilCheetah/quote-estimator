@@ -1,33 +1,86 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Injectable, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+
+import { User } from '@prisma/client';
+import { JwtTokens } from '@common/interface';
+import { UsersService } from '../users/users.service';
+import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
+import { NewUserDTO } from '@common/dto';
+import { JwtPayload } from '@common/interface/jwt-payload.interface';
 
 
 @Injectable()
 export class AuthService
 {
-    create(createAuthDto: CreateAuthDto)
+    constructor(
+        private readonly jwtService:   JwtService,
+        private readonly usersService: UsersService,
+    ) {}
+
+    async validate(email: string, passwd: string): Promise< Partial<User> | null >
     {
-        return 'This action adds a new auth';
+        const user             = await this.usersService.findOneByEmail(email),
+              password_matches = await bcrypt.compare(user.password, passwd);
+
+        if ( !(user && password_matches) )
+            return null;
+        
+        const { password, ...user_info } = user;
+
+        return user_info;
     }
 
-    findAll()
+    async signup(new_user: NewUserDTO): Promise<JwtTokens>
     {
-        return `This action returns all auth`;
+        const user   = await this.usersService.create(new_user);
+        
+        const tokens = this.getTokens({ sub: user.user_id, email: user.email });
+        await this.usersService.updateRefreshToken(user.user_id, tokens.refresh_token);
+
+        return tokens;
     }
 
-    findOne(id: number)
+    async login(credentials: AuthCredentialsDTO): Promise<JwtTokens>
     {
-        return `This action returns a #${id} auth`;
+        const user = await this.validate(credentials.email, credentials.password)
+
+        if ( !user )
+            throw new UnauthorizedException();
+
+        const tokens = this.getTokens({ sub: user.user_id, email: user.email });
+        await this.usersService.updateRefreshToken(user.user_id, tokens.refresh_token)
+
+        return tokens;
     }
 
-    update(id: number, updateAuthDto: UpdateAuthDto)
+    logout()
     {
-        return `This action updates a #${id} auth`;
+        return `This action logs out`;
     }
 
-    remove(id: number)
+    refresh()
     {
-        return `This action removes a #${id} auth`;
+        return `This action refreshes`;
+    }
+
+    getTokens(payload: JwtPayload): JwtTokens
+    {
+        const access_token  = this.jwtService.sign(payload),
+              refresh_token = this.jwtService.sign(payload, { expiresIn: '30d' });
+        
+        return { access_token, refresh_token };
+    }
+
+    /// --------------- Currently Not in User --------------- ///
+    async verify(token: string): Promise<User>
+    {
+        const decoded = this.jwtService.verify(token);
+        const user    = this.usersService.findOneByEmail(decoded.email);
+
+        if ( !user )
+            throw new NotAcceptableException('Unable to decode user data from provided token');
+        
+        return user;
     }
 }
