@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+import * as dotenv from "dotenv";
 import * as Input from "prompt-sync"
 import { isEmail } from "class-validator";
 import { PrismaClient, Role } from "@prisma/client";
@@ -29,7 +31,7 @@ function _get_email(): string
 {
     const input = Input();
 
-    let email = input('Enter a Valid Email:    ');
+    let email = input('Enter a Valid Email:     ');
 
     while ( !isEmail(email) )
     {
@@ -43,6 +45,8 @@ function _get_email(): string
 
 function _get_password(): string
 {
+    console.log(process.env.SALT_ROUNDS);
+
     const input = Input();
 
     let password     = input('Enter a Password:       ', { echo: '' }),
@@ -58,7 +62,7 @@ function _get_password(): string
         confirmation = input('Repeat a Password: ', { echo: '' });
     }
 
-    return password;
+    return bcrypt.hashSync(password, process.env.SALT_ROUNDS);
 }
 
 
@@ -79,6 +83,8 @@ async function create_super_user(prisma: PrismaClient)
 
 
 async function main() {
+    dotenv.config();
+
     const prisma = new PrismaClient();
     
     process.on('SIGINT', () => ( process.exit() ));
