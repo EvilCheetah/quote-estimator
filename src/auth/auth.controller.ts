@@ -1,9 +1,10 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
 import { User } from '@common/decorator';
 import { AccessToken } from '@common/interface';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
+import { NewUserDTO } from '@common/dto';
 
 
 @Controller('auth')
@@ -14,9 +15,12 @@ export class AuthController
     ) {}
 
     @Post('signup')
-    signup()
+    signup(
+        @Body()
+        new_user: NewUserDTO
+    )
     {
-        this.authService.signup();
+        this.authService.signup(new_user);
     }
 
     @Post('login')
