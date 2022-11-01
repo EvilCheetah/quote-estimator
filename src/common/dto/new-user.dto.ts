@@ -1,4 +1,4 @@
-import { IsEmail, Max } from "class-validator";
+import { IsEmail, IsString, MaxLength } from "class-validator";
 
 import { IsEqualTo, IsStrongPassword, IsUsername } from "@common/decorator";
 
@@ -9,14 +9,15 @@ export class NewUserDTO
     email:            string;
 
     @IsUsername()
-    @Max(120)
+    @MaxLength(120)
     username:         string;
 
     @IsStrongPassword()
-    @Max(120)
+    @MaxLength(120)
     password:         string;
 
-    @Max(120)
+    @IsString()
+    @MaxLength(120)
     @IsEqualTo('password', { 'message': "'confirm_password' should match 'password''" })
     confirm_password: string;
 }
