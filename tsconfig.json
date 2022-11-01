@@ -25,9 +25,11 @@
         "@common/*": ["common/*"],
         "@constant/*": ["common/constant/*"],
         "@decorator/*": ["common/decorator/*"],
+        "@interface/*": ["common/interface/*"],
 
         "@constant": ["common/constant/index"],
-        "@decorator": ["common/decorator/index"]
+        "@decorator": ["common/decorator/index"],
+        "@interface": ["common/interface/index"],
     },
   }
 }
