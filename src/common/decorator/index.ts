@@ -1,4 +1,5 @@
 export * from './parameter/user.decorator';
+export * from './parameter/get-user.decorator';
 
 export * from './validator/is-equal-to.decorator';
 export * from './validator/is-username.decorator';
