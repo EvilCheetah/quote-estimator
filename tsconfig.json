@@ -1,8 +1,4 @@
 {
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  },
-  
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -22,14 +18,17 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-        "@common/*": ["common/*"],
-        "@constant/*": ["common/constant/*"],
+        "@common/*":    ["common/*"],
+
+        "@dto/*":       ["common/dto/*"],
+        "@constant/*":  ["common/constant/*"],
         "@decorator/*": ["common/decorator/*"],
         "@interface/*": ["common/interface/*"],
 
-        "@constant": ["common/constant/index"],
-        "@decorator": ["common/decorator/index"],
-        "@interface": ["common/interface/index"],
+        "@dto":         ["common/dto/index"],
+        "@constant":    ["common/constant/index"],
+        "@decorator":   ["common/decorator/index"],
+        "@interface":   ["common/interface/index"],
     },
   }
 }
