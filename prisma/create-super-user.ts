@@ -45,8 +45,6 @@ function _get_email(): string
 
 function _get_password(): string
 {
-    console.log(process.env.SALT_ROUNDS);
-
     const input = Input();
 
     let password     = input('Enter a Password:       ', { echo: '' }),
