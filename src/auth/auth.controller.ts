@@ -35,21 +35,21 @@ export class AuthController
     @Post('logout')
     logout(
         @GetUser('sub', ParseIntPipe)
-        user_id: string
+        user_id: number
     )
     {
-        this.authService.logout(+user_id);
+        this.authService.logout(user_id);
     }
 
     @Post('refresh')
     refresh(
         @GetUser('sub', ParseIntPipe)
-        user_id: string,
+        user_id: number,
 
         @GetUser('refresh_token')
         refresh_token: string
     )
     {
-        this.authService.refresh(+user_id, refresh_token);
+        this.authService.refresh(user_id, refresh_token);
     }
 }
