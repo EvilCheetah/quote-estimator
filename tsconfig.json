@@ -20,15 +20,17 @@
     "paths": {
         "@common/*":    ["common/*"],
 
-        "@dto/*":       ["common/dto/*"],
         "@constant/*":  ["common/constant/*"],
+        "@dto/*":       ["common/dto/*"],
         "@decorator/*": ["common/decorator/*"],
         "@interface/*": ["common/interface/*"],
+        "@types/*":     ["common/types/*"],
 
-        "@dto":         ["common/dto/index"],
         "@constant":    ["common/constant/index"],
+        "@dto":         ["common/dto/index"],
         "@decorator":   ["common/decorator/index"],
         "@interface":   ["common/interface/index"],
+        "@types":       ["common/types/index"]
     },
   }
 }
