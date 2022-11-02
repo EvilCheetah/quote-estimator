@@ -2,7 +2,7 @@ import { Body, Controller, ParseIntPipe, Post } from '@nestjs/common';
 
 import { NewUserDTO } from '@common/dto';
 import { GetUser, User } from '@common/decorator';
-import { AccessToken } from '@common/interface';
+import { JwtTokens } from '@common/interface';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
 
@@ -18,16 +18,16 @@ export class AuthController
     signup(
         @Body()
         new_user: NewUserDTO
-    )
+    ): Promise<JwtTokens>
     {
-        this.authService.signup(new_user);
+        return this.authService.signup(new_user);
     }
 
     @Post('login')
     login(
         @User()
         credential: AuthCredentialsDTO
-    ): any
+    ): Promise<JwtTokens>
     {
         return this.authService.login( credential );
     }
@@ -48,8 +48,8 @@ export class AuthController
 
         @GetUser('refresh_token')
         refresh_token: string
-    )
+    ): Promise<JwtTokens>
     {
-        this.authService.refresh(user_id, refresh_token);
+        return this.authService.refresh(user_id, refresh_token);
     }
 }
