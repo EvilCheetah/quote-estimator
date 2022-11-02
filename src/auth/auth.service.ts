@@ -54,9 +54,9 @@ export class AuthService
         return tokens;
     }
 
-    logout()
+    logout(user_id: number)
     {
-        return `This action logs out`;
+        this.usersService.resetRefreshToken(user_id);
     }
 
     refresh()
