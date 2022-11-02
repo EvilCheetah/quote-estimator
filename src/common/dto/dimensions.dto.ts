@@ -1,4 +1,4 @@
-import { IsNonNegative } from "../decorator/is-non-negative.decorator";
+import { IsNonNegative } from "@decorator";
 import { Dimensions } from "../interface/dimensions.interface";
 
 
