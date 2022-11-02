@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { NewUserDTO } from '@common/dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { UniqueUserCriteria } from '@common/interface';
 
 
 @Injectable()
@@ -14,6 +15,7 @@ export class UsersService
         private readonly prisma:        PrismaService,
         private readonly configService: ConfigService
     ) {}
+
 
     async create(new_user: NewUserDTO): Promise<User>
     {
@@ -34,26 +36,44 @@ export class UsersService
         });
     }
 
+
     findAll()
     {
-        return `This action returns all users`;
+        return this.prisma.user.findMany();
     }
 
-    findOneByEmail(email: string)
+
+    async findOneBy(criteria: UniqueUserCriteria): Promise<User>
     {
-        return this.prisma.user.findUnique({
-            where: { email }
+        const user = await this.prisma.user.findUnique({
+            where: criteria
         });
+
+        if ( !user )
+            throw new NotFoundException(`User with specified criteria was NOT FOUND`);
+
+        return user;
     }
 
-    findOneByUsername(username: string)
+    findOneById(user_id: number): Promise<User>
     {
-        return this.prisma.user.findUnique({
-            where: { username }
-        });
+        return this.findOneBy({ user_id });;
     }
 
-    async updateRefreshToken(user_id: number, refresh_token: string)
+
+    findOneByEmail(email: string): Promise<User>
+    {
+        return this.findOneBy({ email });
+    }
+
+
+    findOneByUsername(username: string): Promise<User>
+    {
+        return this.findOneBy({ username });
+    }
+
+
+    async updateRefreshToken(user_id: number, refresh_token: string | null)
     {
         const refresh_token_hash = await bcrypt.hash(
             refresh_token, 
@@ -68,15 +88,41 @@ export class UsersService
         });
     }
 
+
+    async resetRefreshToken(user_id: number)
+    {
+        await this.prisma.user.updateMany({
+            where: {
+                user_id: user_id,
+                refresh_token: {
+                    not: null
+                }
+            },
+            data: { refresh_token: null }
+        });
+
+        return true;
+    }
+
+
     update(id: number)
     {
         return `This action updates a #${id} user`;
     }
 
-    remove(id: number)
+
+    async remove(user_id: number)
     {
-        return `This action removes a #${id} user`;
+        const user = await this.findOneBy({ user_id });
+
+        if ( user.role === Role.ADMIN )
+            throw new ForbiddenException('Unable to delete superuser');
+
+        return this.prisma.user.delete({
+            where: { user_id: user.user_id }
+        })
     }
+
 
     private async _check_for_conflicts(user_data: Partial<User>)
     {
