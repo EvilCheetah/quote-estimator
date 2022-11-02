@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, ParseIntPipe, Post } from '@nestjs/common';
 
 import { NewUserDTO } from '@common/dto';
 import { GetUser, User } from '@common/decorator';
@@ -34,7 +34,7 @@ export class AuthController
 
     @Post('logout')
     logout(
-        @GetUser('sub')
+        @GetUser('sub', ParseIntPipe)
         user_id: string
     )
     {
@@ -42,8 +42,14 @@ export class AuthController
     }
 
     @Post('refresh')
-    refresh()
+    refresh(
+        @GetUser('sub', ParseIntPipe)
+        user_id: string,
+
+        @GetUser('refresh_token')
+        refresh_token: string
+    )
     {
-        this.authService.refresh();
+        this.authService.refresh(+user_id, refresh_token);
     }
 }
