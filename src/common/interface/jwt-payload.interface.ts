@@ -1,6 +1,9 @@
+import { ID } from "@common/types";
+
+
 export interface JwtPayload
 {
-    sub?:    number;
+    sub?:    ID;
     
     email?:  string;
 }
