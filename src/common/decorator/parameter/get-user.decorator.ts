@@ -5,15 +5,16 @@ import { JwtPayload, RefreshToken } from "@common/interface";
 
 export const GetUser = createParamDecorator(
     function(
-        data:    keyof JwtPayload & RefreshToken, 
+        data:    (keyof (JwtPayload & RefreshToken)), 
         context: ExecutionContext
     )
     {
         const request = context.switchToHttp().getRequest();
+        const user    = request.user;
 
-        if ( !data )
-            return request.user;
+        if ( !( data && (data in user) ) )
+            return user;
 
-        return request.user[data];
+        return user[data];
     }
 );
