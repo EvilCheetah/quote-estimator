@@ -76,7 +76,7 @@ async function create_super_user(prisma: PrismaClient)
     await prisma.user.create({
         data: {
             username, email, password,
-            role:     Role.ADMIN
+            role:     Role.SUPERUSER
         }
     });
 }
