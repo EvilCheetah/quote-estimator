@@ -1,6 +1,7 @@
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 import * as Input from "prompt-sync"
+import * as dotenv_expand from "dotenv-expand";
 import { isEmail } from "class-validator";
 import { PrismaClient, Role } from "@prisma/client";
 
@@ -60,7 +61,7 @@ function _get_password(): string
         confirmation = input('Repeat a Password: ', { echo: '' });
     }
 
-    return bcrypt.hashSync(password, process.env.SALT_ROUNDS);
+    return bcrypt.hashSync(password, +process.env.SALT_ROUNDS);
 }
 
 
@@ -81,7 +82,7 @@ async function create_super_user(prisma: PrismaClient)
 
 
 async function main() {
-    dotenv.config();
+    dotenv_expand.expand( dotenv.config() );
 
     const prisma = new PrismaClient();
     
