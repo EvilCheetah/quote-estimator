@@ -3,11 +3,11 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { User } from '@prisma/client';
-import { JwtTokens } from '@common/interface';
+import { NewUserDTO } from '@common/dto';
+import { ValidatedUser } from '@common/types';
+import { JwtTokens, JwtPayload } from '@common/interface';
 import { UsersService } from '../users/users.service';
 import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
-import { NewUserDTO } from '@common/dto';
-import { JwtPayload } from '@common/interface/jwt-payload.interface';
 
 
 @Injectable()
@@ -18,12 +18,25 @@ export class AuthService
         private readonly usersService: UsersService,
     ) {}
 
-    async validate(email: string, passwd: string): Promise< Partial<User> | null >
+    async validateCredentials(email: string, passwd: string): Promise<ValidatedUser>
     {
         const user             = await this.usersService.findOneByEmail(email),
               password_matches = await bcrypt.compare(user.password, passwd);
 
         if ( !(user && password_matches) )
+            return null;
+        
+        const { password, ...user_info } = user;
+
+        return user_info;
+    }
+
+    async validateRefreshToken(user_id: number, refresh_token: string): Promise<ValidatedUser>
+    {
+        const user             = await this.usersService.findOneById(user_id),
+              refresh_is_valid = await bcrypt.compare(refresh_token, user.refresh_token);
+        
+        if ( !(user && refresh_is_valid) )
             return null;
         
         const { password, ...user_info } = user;
@@ -43,7 +56,7 @@ export class AuthService
 
     async login(credentials: AuthCredentialsDTO): Promise<JwtTokens>
     {
-        const user = await this.validate(credentials.email, credentials.password)
+        const user = await this.validateCredentials(credentials.email, credentials.password)
 
         if ( !user )
             throw new UnauthorizedException();
@@ -59,9 +72,17 @@ export class AuthService
         this.usersService.resetRefreshToken(user_id);
     }
 
-    refresh()
+    async refresh(user_id: number, refresh_token: string): Promise<JwtTokens>
     {
-        return `This action refreshes`;
+        const user = await this.validateRefreshToken(user_id, refresh_token);
+
+        if ( !user )
+            throw new UnauthorizedException();
+        
+        const tokens = this.getTokens({ sub: user.user_id, email: user.email });
+        await this.usersService.updateRefreshToken(user.user_id, tokens.refresh_token);
+
+        return tokens;
     }
 
     getTokens(payload: JwtPayload): JwtTokens
