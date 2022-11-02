@@ -9,7 +9,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -18,19 +18,19 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-        "@common/*":    ["common/*"],
+        "@common/*":    ["src/common/*"],
 
-        "@constant/*":  ["common/constant/*"],
-        "@dto/*":       ["common/dto/*"],
-        "@decorator/*": ["common/decorator/*"],
-        "@interface/*": ["common/interface/*"],
-        "@types/*":     ["common/types/*"],
+        "@constant/*":  ["src/common/constant/*"],
+        "@dto/*":       ["src/common/dto/*"],
+        "@decorator/*": ["src/common/decorator/*"],
+        "@interface/*": ["src/common/interface/*"],
+        "@types/*":     ["src/common/types/*"],
 
-        "@constant":    ["common/constant/index"],
-        "@dto":         ["common/dto/index"],
-        "@decorator":   ["common/decorator/index"],
-        "@interface":   ["common/interface/index"],
-        "@types":       ["common/types/index"]
+        "@constant":    ["src/common/constant/index"],
+        "@dto":         ["src/common/dto/index"],
+        "@decorator":   ["src/common/decorator/index"],
+        "@interface":   ["src/common/interface/index"],
+        "@types":       ["src/common/types/index"]
     },
   }
 }
