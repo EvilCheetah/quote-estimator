@@ -1,10 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
 
-import { User } from '@common/decorator';
+import { NewUserDTO } from '@common/dto';
+import { GetUser, User } from '@common/decorator';
 import { AccessToken } from '@common/interface';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
-import { NewUserDTO } from '@common/dto';
 
 
 @Controller('auth')
@@ -33,9 +33,12 @@ export class AuthController
     }
 
     @Post('logout')
-    logout()
+    logout(
+        @GetUser('sub')
+        user_id: string
+    )
     {
-        this.authService.logout();
+        this.authService.logout(+user_id);
     }
 
     @Post('refresh')
