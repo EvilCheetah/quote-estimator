@@ -1,5 +1,20 @@
+name: document-estimator
+
 services:
+    pg-admin:
+      container_name: pg-admin
+      image: dpage/pgadmin4
+      restart: always
+      ports:
+        - "5050:80"
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.com
+        PGADMIN_DEFAULT_PASSWORD: root
+      depends_on:
+        - database
+
     database:
+      container_name: postgres
       image: ${DB_IMAGE}
       restart: always
       ports:
