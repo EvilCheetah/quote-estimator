@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 
@@ -21,11 +21,11 @@ export class UsersService
     {
         const { password, confirm_password, ...user_data } = new_user;
 
-        this._check_for_conflicts( user_data );
+        await this._check_for_conflicts(user_data);
 
         const password_hash = await bcrypt.hash(
             password,
-            this.configService.get<number>('SALT_ROUNDS')
+            +this.configService.get<number>('SALT_ROUNDS')
         );
 
         return this.prisma.user.create({ 
@@ -48,9 +48,6 @@ export class UsersService
         const user = await this.prisma.user.findUnique({
             where: criteria
         });
-
-        if ( !user )
-            throw new NotFoundException(`User with specified criteria was NOT FOUND`);
 
         return user;
     }
@@ -115,7 +112,7 @@ export class UsersService
     {
         const user = await this.findOneBy({ user_id });
 
-        if ( user.role === Role.ADMIN )
+        if ( user.role === Role.SUPERUSER )
             throw new ForbiddenException('Unable to delete superuser');
 
         return this.prisma.user.delete({
