@@ -1,0 +1,2 @@
+export const MIN_ALLOWED_USERNAME_LENGTH =   5;
+export const MAX_ALLOWED_USERNAME_LENGTH = 120;
