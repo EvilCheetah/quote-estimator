@@ -1,6 +1,7 @@
-import { Injectable, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { Injectable, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
 
 import { User } from '@prisma/client';
 import { NewUserDTO } from '@common/dto';
@@ -14,8 +15,9 @@ import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
 export class AuthService
 {
     constructor(
-        private readonly jwtService:   JwtService,
-        private readonly usersService: UsersService,
+        private readonly configService: ConfigService,
+        private readonly jwtService:    JwtService,
+        private readonly usersService:  UsersService,
     ) {}
 
     async validateCredentials(email: string, passwd: string): Promise<ValidatedUser>
@@ -87,8 +89,18 @@ export class AuthService
 
     getTokens(payload: JwtPayload): JwtTokens
     {
-        const access_token  = this.jwtService.sign(payload),
-              refresh_token = this.jwtService.sign(payload, { expiresIn: '30d' });
+        const access_token  = this.jwtService.sign(
+            payload, 
+            { secret: this.configService.get('ACCESS_JWT_SECRET_KEY') }
+        );
+        
+        const refresh_token = this.jwtService.sign(
+            payload, 
+            { 
+                secret:     this.configService.get('REFRESH_JWT_SECRET_KEY'), 
+                expiresIn: '30d' 
+            }
+        );
         
         return { access_token, refresh_token };
     }
