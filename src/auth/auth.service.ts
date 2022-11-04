@@ -20,6 +20,7 @@ export class AuthService
         private readonly usersService:  UsersService,
     ) {}
 
+    /// -------------------------- Validation Methods -------------------------- ///
     async validateCredentials(email: string, passwd: string): Promise<ValidatedUser>
     {
         const user             = await this.usersService.findOneByEmail(email),
@@ -46,6 +47,7 @@ export class AuthService
         return user_info;
     }
 
+    /// -------------------------- Controller Called Methods -------------------------- ///
     async signup(new_user: NewUserDTO): Promise<JwtTokens>
     {
         const user   = await this.usersService.create(new_user);
@@ -87,6 +89,7 @@ export class AuthService
         return tokens;
     }
 
+    /// -------------------------- Helper Methods -------------------------- ///
     getTokens(payload: JwtPayload): JwtTokens
     {
         const access_token  = this.jwtService.sign(
