@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 
+import { JwtAuthGuard } from '@common/guard';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -21,6 +23,9 @@ import { GeolocationModule } from './geolocation/geolocation.module';
         /// Services Imports
         VehicleModule,
         GeolocationModule,
+    ],
+    providers: [
+        { provide: APP_GUARD, useClass: JwtAuthGuard }
     ]
 })
 export class AppModule {}
