@@ -23,12 +23,14 @@
         "@constant/*":  ["src/common/constant/*"],
         "@dto/*":       ["src/common/dto/*"],
         "@decorator/*": ["src/common/decorator/*"],
+        "@guard/*":     ["src/common/guard/*"],
         "@interface/*": ["src/common/interface/*"],
         "@types/*":     ["src/common/types/*"],
 
         "@constant":    ["src/common/constant/index"],
         "@dto":         ["src/common/dto/index"],
         "@decorator":   ["src/common/decorator/index"],
+        "@guard":       ["src/common/guard/index"],
         "@interface":   ["src/common/interface/index"],
         "@types":       ["src/common/types/index"]
     },
