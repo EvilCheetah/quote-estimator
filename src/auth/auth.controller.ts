@@ -1,10 +1,11 @@
-import { Body, Controller, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 
 import { NewUserDTO } from '@common/dto';
-import { GetUser, User } from '@common/decorator';
+import { GetUser, Public, User } from '@common/decorator';
 import { JwtTokens } from '@common/interface';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
+import { JwtRefreshAuthGuard } from '@common/guard';
 
 
 @Controller('auth')
@@ -13,6 +14,7 @@ export class AuthController
     constructor(
         private readonly authService: AuthService
     ) {}
+
 
     @Post('signup')
     signup(
@@ -23,6 +25,8 @@ export class AuthController
         return this.authService.signup(new_user);
     }
 
+
+    @Public()
     @Post('login')
     login(
         @User()
@@ -32,16 +36,20 @@ export class AuthController
         return this.authService.login( credential );
     }
 
+
     @Post('logout')
     logout(
         @GetUser('sub', ParseIntPipe)
         user_id: number
     )
     {
-        this.authService.logout(user_id);
+        return this.authService.logout(user_id);
     }
 
+    
+    @Public()
     @Post('refresh')
+    @UseGuards(JwtRefreshAuthGuard)
     refresh(
         @GetUser('sub', ParseIntPipe)
         user_id: number,
