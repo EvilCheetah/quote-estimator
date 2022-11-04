@@ -1,3 +1,4 @@
+export * from './router/public.decorator';
 export * from './parameter/user.decorator';
 export * from './parameter/get-user.decorator';
 
