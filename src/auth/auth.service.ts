@@ -23,7 +23,7 @@ export class AuthService
     async validateCredentials(email: string, passwd: string): Promise<ValidatedUser>
     {
         const user             = await this.usersService.findOneByEmail(email),
-              password_matches = await bcrypt.compare(user.password, passwd);
+              password_matches = await bcrypt.compare(passwd, user.password);
 
         if ( !(user && password_matches) )
             return null;
@@ -65,9 +65,11 @@ export class AuthService
         return tokens;
     }
 
-    logout(user_id: number)
+    async logout(user_id: number)
     {
-        this.usersService.resetRefreshToken(user_id);
+        await this.usersService.resetRefreshToken(user_id);
+
+        return `Successfully logged out`;
     }
 
     async refresh(user_id: number, refresh_token: string): Promise<JwtTokens>
