@@ -1,11 +1,11 @@
-import { Body, Controller, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 
 import { NewUserDTO } from '@common/dto';
 import { GetUser, Public, User } from '@common/decorator';
 import { JwtTokens } from '@common/interface';
 import { AuthService } from './auth.service';
-import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
-import { JwtRefreshAuthGuard } from '@common/guard';
+import { JwtRefreshAuthGuard, LocalAuthGuard } from '@common/guard';
+import { ValidatedUser } from '@common/types';
 
 
 @Controller('auth')
@@ -16,6 +16,7 @@ export class AuthController
     ) {}
 
 
+    @Public()
     @Post('signup')
     signup(
         @Body()
@@ -26,18 +27,20 @@ export class AuthController
     }
 
 
-    @Public()
     @Post('login')
+    @HttpCode(HttpStatus.OK)
+    @UseGuards(LocalAuthGuard)
     login(
         @User()
-        credential: AuthCredentialsDTO
+        user: ValidatedUser
     ): Promise<JwtTokens>
     {
-        return this.authService.login( credential );
+        return this.authService.login( user );
     }
 
 
     @Post('logout')
+    @HttpCode(HttpStatus.OK)
     logout(
         @GetUser('sub', ParseIntPipe)
         user_id: number
@@ -46,9 +49,9 @@ export class AuthController
         return this.authService.logout(user_id);
     }
 
-    
-    @Public()
+
     @Post('refresh')
+    @HttpCode(HttpStatus.OK)
     @UseGuards(JwtRefreshAuthGuard)
     refresh(
         @GetUser('sub', ParseIntPipe)
