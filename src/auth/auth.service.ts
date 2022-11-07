@@ -8,7 +8,6 @@ import { NewUserDTO } from '@common/dto';
 import { ValidatedUser } from '@common/types';
 import { JwtTokens, JwtPayload } from '@common/interface';
 import { UsersService } from '../users/users.service';
-import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
 
 
 @Injectable()
