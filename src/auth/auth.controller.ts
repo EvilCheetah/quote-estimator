@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 
 import { NewUserDTO } from '@common/dto';
-import { GetUser, Public, User } from '@common/decorator';
+import { GetUser, IgnoreDefaultGuard, Public, User } from '@common/decorator';
 import { JwtTokens } from '@common/interface';
 import { AuthService } from './auth.service';
 import { JwtRefreshAuthGuard, LocalAuthGuard } from '@common/guard';
@@ -28,6 +28,7 @@ export class AuthController
 
 
     @Post('login')
+    @IgnoreDefaultGuard()
     @HttpCode(HttpStatus.OK)
     @UseGuards(LocalAuthGuard)
     login(
@@ -42,7 +43,7 @@ export class AuthController
     @Post('logout')
     @HttpCode(HttpStatus.OK)
     logout(
-        @GetUser('sub', ParseIntPipe)
+        @GetUser('sub')
         user_id: number
     )
     {
@@ -51,6 +52,7 @@ export class AuthController
 
 
     @Post('refresh')
+    @IgnoreDefaultGuard()
     @HttpCode(HttpStatus.OK)
     @UseGuards(JwtRefreshAuthGuard)
     refresh(
