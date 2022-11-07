@@ -58,13 +58,8 @@ export class AuthService
         return tokens;
     }
 
-    async login(credentials: AuthCredentialsDTO): Promise<JwtTokens>
+    async login(user: ValidatedUser): Promise<JwtTokens>
     {
-        const user = await this.validateCredentials(credentials.email, credentials.password)
-
-        if ( !user )
-            throw new UnauthorizedException();
-
         const tokens = this.getTokens({ sub: user.user_id, email: user.email });
         await this.usersService.updateRefreshToken(user.user_id, tokens.refresh_token)
 
