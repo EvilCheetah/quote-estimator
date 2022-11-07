@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
-import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable } from '@nestjs/common';
 
 import { Role, User } from '@prisma/client';
 import { NewUserDTO } from '@common/dto';
@@ -25,7 +25,7 @@ export class UsersService
 
         const password_hash = await bcrypt.hash(
             password,
-            +this.configService.get<number>('SALT_ROUNDS')
+            +this.configService.get('SALT_ROUNDS')
         );
 
         return this.prisma.user.create({ 
@@ -74,7 +74,7 @@ export class UsersService
     {
         const refresh_token_hash = await bcrypt.hash(
             refresh_token, 
-            this.configService.get<number>('SALT_ROUNDS')
+            +this.configService.get('SALT_ROUNDS')
         );
 
         await this.prisma.user.update({
