@@ -1,6 +1,5 @@
 import { Request } from "express";
-import { Strategy } from "passport-local";
-import { ExtractJwt } from "passport-jwt";
+import { ExtractJwt, Strategy } from "passport-jwt";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { ForbiddenException } from "@nestjs/common";
