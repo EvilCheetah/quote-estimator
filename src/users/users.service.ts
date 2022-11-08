@@ -1,3 +1,4 @@
+import * as argon2 from 'argon2';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { ConflictException, ForbiddenException, Injectable } from '@nestjs/common';
@@ -70,12 +71,9 @@ export class UsersService
     }
 
 
-    async updateRefreshToken(user_id: number, refresh_token: string | null)
+    async updateRefreshToken(user_id: number, refresh_token: string)
     {
-        const refresh_token_hash = await bcrypt.hash(
-            refresh_token, 
-            +this.configService.get('SALT_ROUNDS')
-        );
+        const refresh_token_hash = await argon2.hash(refresh_token);
 
         await this.prisma.user.update({
             where: { user_id },
