@@ -74,7 +74,7 @@ export class AuthService
     {
         await this.usersService.resetRefreshToken(user_id);
 
-        return `Successfully logged out`;
+        return { message: 'Successfully logged out' };
     }
 
     async refresh(user: ValidatedUser): Promise<JwtTokens>
