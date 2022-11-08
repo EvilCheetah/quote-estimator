@@ -27,6 +27,7 @@
         "@interface/*": ["src/common/interface/*"],
         "@types/*":     ["src/common/types/*"],
 
+        "@auth":        ["src/auth/index"],
         "@constant":    ["src/common/constant/index"],
         "@dto":         ["src/common/dto/index"],
         "@decorator":   ["src/common/decorator/index"],
