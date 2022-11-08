@@ -1,4 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+
+import { State } from '@prisma/client';
 import { StateService } from './state.service';
 import { CreateStateDTO } from './dto/create-state.dto';
 import { UpdateStateDTO } from './dto/update-state.dto';
@@ -13,13 +15,13 @@ export class StateController
     create(
         @Body()
         createStateDTO: CreateStateDTO
-    )
+    ): Promise<State>
     {
         return this.stateService.create(createStateDTO);
     }
 
     @Get()
-    findAll()
+    findAll(): Promise<State[]>
     {
         return this.stateService.findAll();
     }
@@ -28,7 +30,7 @@ export class StateController
     findOne(
         @Param('state_id', ParseIntPipe)
         state_id: number
-    )
+    ): Promise<State>
     {
         return this.stateService.findOne(state_id);
     }
@@ -40,7 +42,7 @@ export class StateController
         
         @Body()
         updateStateDTO: UpdateStateDTO
-    )
+    ): Promise<State>
     {
         return this.stateService.update(state_id, updateStateDTO);
     }
@@ -49,7 +51,7 @@ export class StateController
     remove(
         @Param('state_id', ParseIntPipe)
         state_id: number
-    )
+    ): Promise<State>
     {
         return this.stateService.remove(state_id);
     }
