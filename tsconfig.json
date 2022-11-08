@@ -33,7 +33,8 @@
         "@decorator":   ["src/common/decorator/index"],
         "@guard":       ["src/common/guard/index"],
         "@interface":   ["src/common/interface/index"],
-        "@types":       ["src/common/types/index"]
+        "@types":       ["src/common/types/index"],
+        "@users":       ["src/users/index"]
     },
   }
 }
