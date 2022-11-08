@@ -3,10 +3,10 @@ import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { ConflictException, ForbiddenException, Injectable } from '@nestjs/common';
 
+import { NewUserDTO } from '@dto';
 import { Role, User } from '@prisma/client';
-import { NewUserDTO } from '@common/dto';
+import { UniqueUserCriteria } from '@interface';
 import { PrismaService } from '../prisma/prisma.service';
-import { UniqueUserCriteria } from '@common/interface';
 
 
 @Injectable()

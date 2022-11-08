@@ -5,7 +5,7 @@ import * as dotenv_expand from "dotenv-expand";
 import { isEmail } from "class-validator";
 import { PrismaClient, Role } from "@prisma/client";
 
-import { isStrongPassword, isUsername } from "@common/decorator";
+import { isStrongPassword, isUsername } from "@decorator";
 
 
 function _get_username(): string

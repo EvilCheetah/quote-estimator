@@ -1,5 +1,5 @@
 import { buildMessage, matches, ValidateBy, ValidationOptions } from "class-validator";
-import { USERNAME_PATTERN } from "@common/constant";
+import { USERNAME_PATTERN } from "@constant";
 
 
 export const IS_USERNAME = 'isUsername';

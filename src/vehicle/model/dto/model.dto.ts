@@ -1,8 +1,8 @@
 import { Type } from "class-transformer";
 import { IsInt, IsNumber, IsString, ValidateNested } from "class-validator";
 
-import { Dimensions } from "@common/interface";
-import { DimensionsDTO } from "@common/dto";
+import { Dimensions } from "@interface";
+import { DimensionsDTO } from "@dto";
 
 
 export class ModelDTO

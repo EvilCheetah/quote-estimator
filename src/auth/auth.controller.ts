@@ -1,11 +1,11 @@
-import { Body, Controller, HttpCode, HttpStatus, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
 
-import { NewUserDTO } from '@common/dto';
-import { GetUser, IgnoreDefaultGuard, Public, User } from '@common/decorator';
-import { JwtTokens } from '@common/interface';
+import { NewUserDTO } from '@dto';
+import { JwtTokens } from '@interface';
 import { AuthService } from './auth.service';
-import { JwtRefreshAuthGuard, LocalAuthGuard } from '@common/guard';
-import { ValidatedUser } from '@common/types';
+import { ValidatedUser } from '@types';
+import { JwtRefreshAuthGuard, LocalAuthGuard } from '@guard';
+import { GetUser, IgnoreDefaultGuard, Public, User } from '@decorator';
 
 
 @Controller('auth')

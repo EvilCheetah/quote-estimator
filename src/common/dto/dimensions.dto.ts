@@ -1,5 +1,5 @@
 import { IsNonNegative } from "@decorator";
-import { Dimensions } from "../interface/dimensions.interface";
+import { Dimensions } from "@interface";
 
 
 export class DimensionsDTO

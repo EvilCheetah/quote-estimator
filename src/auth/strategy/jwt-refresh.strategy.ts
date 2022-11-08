@@ -1,10 +1,10 @@
 import { Request } from "express";
-import { ExtractJwt, Strategy } from "passport-jwt";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
-import { ForbiddenException, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { ExtractJwt, Strategy } from "passport-jwt";
+import { ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
 
-import { JwtPayload } from "@common/interface";
+import { JwtPayload } from "@interface";
 import { AuthService } from "../auth.service";
 
 

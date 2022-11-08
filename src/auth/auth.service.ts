@@ -5,9 +5,9 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 
 import { User } from '@prisma/client';
-import { NewUserDTO } from '@common/dto';
-import { ValidatedUser } from '@common/types';
-import { JwtTokens, JwtPayload } from '@common/interface';
+import { NewUserDTO } from '@dto';
+import { ValidatedUser } from '@types';
+import { JwtTokens, JwtPayload } from '@interface';
 import { UsersService } from '../users/users.service';
 
 

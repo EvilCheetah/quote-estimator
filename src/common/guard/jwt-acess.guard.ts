@@ -2,8 +2,8 @@ import { Reflector } from "@nestjs/core";
 import { AuthGuard } from "@nestjs/passport";
 import { ExecutionContext, Injectable } from "@nestjs/common";
 
-import { CanActivate } from "@common/types";
-import { IGNORE_DEFAULT_GUARD, IS_PUBLIC_KEY } from "@common/decorator";
+import { CanActivate } from "@types";
+import { IGNORE_DEFAULT_GUARD, IS_PUBLIC_KEY } from "@decorator";
 
 
 @Injectable()

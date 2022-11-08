@@ -1,5 +1,5 @@
 import { buildMessage, matches, ValidateBy, ValidationOptions } from "class-validator";
-import { STRONG_PASSWORD } from "@common/constant";
+import { STRONG_PASSWORD } from "@constant";
 
 
 export const IS_STRONG_PASSWORD = 'isStrongPassword';

@@ -1,12 +1,12 @@
 import { IsEmail, IsString, Length } from "class-validator";
 
-import { IsEqualTo, IsStrongPassword, IsUsername } from "@common/decorator";
+import { IsEqualTo, IsStrongPassword, IsUsername } from "@decorator";
 import {
     MIN_ALLOWED_PASSWORD_LENGTH,
     MAX_ALLOWED_PASSWORD_LENGTH,
     MIN_ALLOWED_USERNAME_LENGTH,
     MAX_ALLOWED_USERNAME_LENGTH
-} from "@common/constant";
+} from "@constant";
 
 
 export class NewUserDTO

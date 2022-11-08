@@ -1,4 +1,4 @@
-import { ID } from "@common/types";
+import { ID } from "@types";
 
 
 export interface JwtPayload
