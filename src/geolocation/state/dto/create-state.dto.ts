@@ -1,8 +1,11 @@
-import { IsString, MaxLength, MinLength } from "class-validator";
+import { IsInt, IsString, MaxLength, MinLength } from "class-validator";
 
 
 export class CreateStateDTO
 {
+    @IsInt()
+    country_id: number;
+    
     @IsString()
     state_name:         string;
     
