@@ -1,4 +1,4 @@
-import { IsInt, IsString, MaxLength, MinLength } from "class-validator";
+import { IsInt, IsString, Length } from "class-validator";
 
 
 export class CreateStateDTO
@@ -10,7 +10,6 @@ export class CreateStateDTO
     state_name:         string;
     
     @IsString()
-    @MinLength(2)
-    @MaxLength(2)
+    @Length(2, 2)
     state_abbreviation: string;
 }
