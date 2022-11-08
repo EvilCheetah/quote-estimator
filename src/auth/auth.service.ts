@@ -1,7 +1,8 @@
+import * as argon2 from 'argon2';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { Injectable, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 
 import { User } from '@prisma/client';
 import { NewUserDTO } from '@common/dto';
@@ -33,15 +34,19 @@ export class AuthService
         return user_info;
     }
 
-    async validateRefreshToken(user_id: number, refresh_token: string): Promise<ValidatedUser>
+    async validateRefreshToken(user_id: number, refresh: string): Promise<ValidatedUser>
     {
-        const user             = await this.usersService.findOneById(user_id),
-              refresh_is_valid = await bcrypt.compare(refresh_token, user.refresh_token);
+        const user             = await this.usersService.findOneById(user_id);
+
+        if ( !( user && user.refresh_token ) )
+            return null;
+
+        const refresh_is_valid = await argon2.verify(user.refresh_token, refresh);
         
-        if ( !(user && refresh_is_valid) )
+        if ( !refresh_is_valid )
             return null;
         
-        const { password, ...user_info } = user;
+        const { password, refresh_token, ...user_info } = user;
 
         return user_info;
     }
@@ -72,13 +77,8 @@ export class AuthService
         return `Successfully logged out`;
     }
 
-    async refresh(user_id: number, refresh_token: string): Promise<JwtTokens>
+    async refresh(user: ValidatedUser): Promise<JwtTokens>
     {
-        const user = await this.validateRefreshToken(user_id, refresh_token);
-
-        if ( !user )
-            throw new UnauthorizedException();
-        
         const tokens = this.getTokens({ sub: user.user_id, email: user.email });
         await this.usersService.updateRefreshToken(user.user_id, tokens.refresh_token);
 
