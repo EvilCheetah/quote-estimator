@@ -56,13 +56,10 @@ export class AuthController
     @HttpCode(HttpStatus.OK)
     @UseGuards(JwtRefreshAuthGuard)
     refresh(
-        @GetUser('sub', ParseIntPipe)
-        user_id: number,
-
-        @GetUser('refresh_token')
-        refresh_token: string
+        @User()
+        user: ValidatedUser,
     ): Promise<JwtTokens>
     {
-        return this.authService.refresh(user_id, refresh_token);
+        return this.authService.refresh(user);
     }
 }
