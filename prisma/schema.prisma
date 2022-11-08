@@ -24,6 +24,9 @@ model User {
     refresh_token String?
 
     role          Role    @default(USER)
+
+
+    @@map("users")
 }
 
 //--------------------- Vehicle Schema ---------------------//
@@ -34,6 +37,10 @@ model Make {
     year        Int
 
     models      Model[]
+
+
+    @@unique([make_name])
+    @@map("vehicle-make")
 }
 
 model Model {
@@ -45,29 +52,53 @@ model Model {
 
     dimensions  Dimensions?
     weight      Int
+
+
+    @@unique([make_id, model_name])
+    @@map("vehicle-model")
 }
 
 model Dimensions {
     dimensions_id   Int   @id   @default(autoincrement())
 
     model           Model @relation(fields: [model_id], references: [model_id], onDelete: Cascade)
-    model_id        Int   @unique
+    model_id        Int
 
     length          Float
     width           Float
     height          Float
+
+
+    @@unique([model_id])
+    @@map("vehicle-dimensions")
 }
 
 
 //--------------------- Geolocation Schema ---------------------//
+model Country {
+    country_id      Int @id @default(autoincrement())
+    country_name    String
+
+    states          State[]
+
+
+    @@unique([country_name])
+    @@map("country")
+}
+
 model State {
     state_id            Int     @id @default(autoincrement())
     state_name          String
     state_abbreviation  String
 
+    country             Country @relation(fields: [country_id], references: [country_id], onDelete: Cascade)
+    country_id          Int
+
     cities              City[]
 
+
     @@unique([state_name])
+    @@map("state")
 }
 
 model City {
@@ -79,7 +110,9 @@ model City {
 
     postal_codes    PostalCode[]
 
+
     @@unique([state_id, city_name])
+    @@map("city")
 }
 
 model PostalCode {
@@ -95,7 +128,9 @@ model PostalCode {
     positions_one       Distance[] @relation("position_one")
     positions_two       Distance[] @relation("position_two")
 
+
     @@unique([postal_code_value])
+    @@map("postal-code")
 }
 
 model Distance {
@@ -112,4 +147,5 @@ model Distance {
 
 
     @@unique([position_one, position_two])
+    @@map("postal-to-postal-distance")
 }
