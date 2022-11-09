@@ -1,22 +1,30 @@
 import { PrismaClient, State } from "@prisma/client";
-import { STATES } from "./data/states";
+import { US_STATES } from "./data/us-states";
 
 
 async function seed(prisma: PrismaClient)
 {
     ///--------------- Populate States ---------------///
-    const states = STATES.map(
+    const states = US_STATES.map(
         function(state)
         {
-            const [state_name, state_abbreviation] = state;
+            const [country_abbreviation, state_name, state_abbreviation] = state;
 
-            return { state_name, state_abbreviation };
+            return { country_abbreviation, state_name, state_abbreviation };
         }
-    ) as State[];
+    );
     
     for (const state of states){
+        const { country_abbreviation, state_name, state_abbreviation } = state;
+
         await prisma.state.create({
-            data: state
+            data: {
+                state_name,
+                state_abbreviation,
+                country: { 
+                    connect: { country_abbreviation } 
+                },
+            }
         });
     }
 
