@@ -20,24 +20,27 @@ export class CityController
         return this.cityService.create(createCityDTO);
     }
 
+
     @Get()
     findAll(): Promise<City[]>
     {
         return this.cityService.findAll();
     }
 
-    @Get(':city_id')
+
+    @Get(':id')
     findOne(
-        @Param('city_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         city_id: number
     ): Promise<City>
     {
         return this.cityService.findOne(city_id);
     }
 
-    @Patch(':city_id')
+
+    @Patch(':id')
     update(
-        @Param('city_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         city_id: number,
         
         @Body()
@@ -47,6 +50,7 @@ export class CityController
         return this.cityService.update(city_id, updateCityDTO);
     }
 
+    
     @Delete(':id')
     remove(
         @Param('id', ParseIntPipe)

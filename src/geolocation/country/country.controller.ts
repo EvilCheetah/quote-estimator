@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 
+import { Public } from '@decorator';
 import { Country } from '@prisma/client';
 import { CountryService } from './country.service';
 import { CreateCountryDTO } from './dto/create-country.dto';
@@ -22,24 +23,29 @@ export class CountryController
         return this.countryService.create(createCountryDTO);
     }
 
+
     @Get()
     findAll(): Promise<Country[]>
     {
         return this.countryService.findAll();
     }
 
-    @Get(':country_id')
+
+    @Get(':id')
     findOne(
-        @Param('country_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         country_id: number
     ): Promise<Country>
     {
+        console.log(country_id)
+
         return this.countryService.findOne(country_id);
     }
 
-    @Patch(':country_id')
+
+    @Patch(':id')
     update(
-        @Param('country_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         country_id: number,
         
         @Body()
@@ -49,9 +55,10 @@ export class CountryController
         return this.countryService.update(country_id, updateCountryDTO);
     }
 
-    @Delete(':country_id')
+    
+    @Delete(':id')
     remove(
-        @Param('country_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         country_id: number
     ): Promise<Country>
     {

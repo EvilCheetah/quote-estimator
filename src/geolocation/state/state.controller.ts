@@ -20,24 +20,27 @@ export class StateController
         return this.stateService.create(createStateDTO);
     }
 
+
     @Get()
     findAll(): Promise<State[]>
     {
         return this.stateService.findAll();
     }
 
-    @Get(':state_id')
+
+    @Get(':id')
     findOne(
-        @Param('state_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         state_id: number
     ): Promise<State>
     {
         return this.stateService.findOne(state_id);
     }
 
-    @Patch(':state_id')
+
+    @Patch(':id')
     update(
-        @Param('state_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         state_id: number, 
         
         @Body()
@@ -47,9 +50,10 @@ export class StateController
         return this.stateService.update(state_id, updateStateDTO);
     }
 
-    @Delete(':state_id')
+    
+    @Delete(':id')
     remove(
-        @Param('state_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         state_id: number
     ): Promise<State>
     {
