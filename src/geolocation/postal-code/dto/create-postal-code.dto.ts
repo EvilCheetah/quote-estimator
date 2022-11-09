@@ -1,1 +1,1 @@
-export class CreatePostalCodeDto {}
+export class CreatePostalCodeDTO {}

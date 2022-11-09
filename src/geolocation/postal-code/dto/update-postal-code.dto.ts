@@ -1,4 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreatePostalCodeDto } from './create-postal-code.dto';
+import { CreatePostalCodeDTO } from './create-postal-code.dto';
 
-export class UpdatePostalCodeDto extends PartialType(CreatePostalCodeDto) {}
+
+export class UpdatePostalCodeDTO extends PartialType(CreatePostalCodeDTO) {}
