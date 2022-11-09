@@ -24,6 +24,7 @@
         "@decorator":   ["src/common/decorator/index"],
         "@guard":       ["src/common/guard/index"],
         "@interface":   ["src/common/interface/index"],
+        "@prisma":      ["src/prisma/index"],
         "@types":       ["src/common/types/index"],
         "@users":       ["src/users/index"],
 
