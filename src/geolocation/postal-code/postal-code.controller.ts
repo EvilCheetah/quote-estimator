@@ -1,34 +1,64 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+
 import { PostalCodeService } from './postal-code.service';
-import { CreatePostalCodeDto } from './dto/create-postal-code.dto';
-import { UpdatePostalCodeDto } from './dto/update-postal-code.dto';
+import { CreatePostalCodeDTO } from './dto/create-postal-code.dto';
+import { UpdatePostalCodeDTO } from './dto/update-postal-code.dto';
+
 
 @Controller('postal-code')
-export class PostalCodeController {
-  constructor(private readonly postalCodeService: PostalCodeService) {}
+export class PostalCodeController
+{
+    constructor(
+        private readonly postalCodeService: PostalCodeService
+    ) {}
 
-  @Post()
-  create(@Body() createPostalCodeDto: CreatePostalCodeDto) {
-    return this.postalCodeService.create(createPostalCodeDto);
-  }
 
-  @Get()
-  findAll() {
-    return this.postalCodeService.findAll();
-  }
+    @Post()
+    create(
+        @Body()
+        createPostalCodeDTO: CreatePostalCodeDTO
+    )
+    {
+        return this.postalCodeService.create(createPostalCodeDTO);
+    }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postalCodeService.findOne(+id);
-  }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostalCodeDto: UpdatePostalCodeDto) {
-    return this.postalCodeService.update(+id, updatePostalCodeDto);
-  }
+    @Get()
+    findAll()
+    {
+        return this.postalCodeService.findAll();
+    }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postalCodeService.remove(+id);
-  }
+
+    @Get(':id')
+    findOne(
+        @Param('id', ParseIntPipe)
+        postal_code_id: number
+    )
+    {
+        return this.postalCodeService.findOne(postal_code_id);
+    }
+
+
+    @Patch(':id')
+    update(
+        @Param('id', ParseIntPipe)
+        postal_code_id: number,
+        
+        @Body()
+        updatePostalCodeDTO: UpdatePostalCodeDTO
+    )
+    {
+        return this.postalCodeService.update(postal_code_id, updatePostalCodeDTO);
+    }
+
+
+    @Delete(':id')
+    remove(
+        @Param('id', ParseIntPipe)
+        postal_code_id: number
+    )
+    {
+        return this.postalCodeService.remove(postal_code_id);
+    }
 }
