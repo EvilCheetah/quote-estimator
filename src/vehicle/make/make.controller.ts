@@ -1,7 +1,7 @@
-import { Make } from '@prisma/client';
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
-import { MakeService } from './make.service';
 
+import { Make } from '@prisma/client';
+import { MakeService } from './make.service';
 import { CreateMakeDTO } from './dto/create-make.dto';
 import { UpdateMakeDTO } from './dto/update-make.dto';
 
@@ -9,7 +9,9 @@ import { UpdateMakeDTO } from './dto/update-make.dto';
 @Controller('make')
 export class MakeController
 {
-    constructor(private readonly makeService: MakeService) {}
+    constructor(
+        private readonly makeService: MakeService
+    ) {}
 
 
     @Post()
@@ -29,9 +31,9 @@ export class MakeController
     }
 
 
-    @Get(':make_id')
+    @Get(':id')
     async find_one(
-        @Param('make_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         make_id: number
     ): Promise<Make>
     {
@@ -39,9 +41,9 @@ export class MakeController
     }
 
 
-    @Patch(':make_id')
+    @Patch(':id')
     async update(
-        @Param('make_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         make_id: number,
         
         @Body()
@@ -52,9 +54,9 @@ export class MakeController
     }
 
     
-    @Delete(':make_id')
+    @Delete(':id')
     async remove(
-        @Param('make_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         make_id: number
     ): Promise<Make>
     {

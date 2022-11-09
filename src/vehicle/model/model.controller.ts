@@ -6,7 +6,9 @@ import { ModelDTO } from './dto/model.dto';
 @Controller('model')
 export class ModelController
 {
-    constructor(private readonly modelService: ModelService) {}
+    constructor(
+        private readonly modelService: ModelService
+    ) {}
 
     
     @Post()
@@ -26,9 +28,9 @@ export class ModelController
     }
 
 
-    @Get(':model_id')
+    @Get(':id')
     findOne(
-        @Param('model_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         model_id: number
     )
     {
@@ -36,9 +38,9 @@ export class ModelController
     }
 
 
-    @Patch(':model_id')
+    @Patch(':id')
     update(
-        @Param('model_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         model_id: number, 
         
         @Body()
@@ -49,9 +51,9 @@ export class ModelController
     }
 
 
-    @Delete(':model_id')
+    @Delete(':id')
     remove(
-        @Param('model_id', ParseIntPipe)
+        @Param('id', ParseIntPipe)
         model_id: number
     )
     {
