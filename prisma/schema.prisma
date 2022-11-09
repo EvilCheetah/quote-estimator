@@ -76,28 +76,27 @@ model Dimensions {
 
 //--------------------- Geolocation Schema ---------------------//
 model Country {
-    country_id      Int @id @default(autoincrement())
-    country_name    String
+    country_id           Int    @id     @default(autoincrement())
+    country_name         String @unique
+    country_abbreviation String @unique
 
-    states          State[]
+    states               State[]
 
 
-    @@unique([country_name])
     @@map("country")
 }
 
 model State {
     state_id            Int     @id @default(autoincrement())
-    state_name          String
-    state_abbreviation  String
+    state_name          String  @unique
+    state_abbreviation  String  @unique
 
     country             Country @relation(fields: [country_id], references: [country_id], onDelete: Cascade)
     country_id          Int
 
     cities              City[]
 
-
-    @@unique([state_name])
+    @@unique([country_id, state_name])
     @@map("state")
 }
 
