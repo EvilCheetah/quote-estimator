@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
-import { ModelService } from './model.service';
+
 import { ModelDTO } from './dto/model.dto';
+import { ModelService } from './model.service';
 
 
 @Controller('model')

@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ModelService } from './model.service';
 import { ModelController } from './model.controller';
 

@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ModelAdditionalFields } from 'src/common/constant/model-options.query';
-import { PrismaService } from 'src/prisma/prisma.service';
+
 import { ModelDTO } from './dto/model.dto';
+import { PrismaService } from '@prisma';
+import { ModelAdditionalFields } from '@constant';
 
 
 @Injectable()

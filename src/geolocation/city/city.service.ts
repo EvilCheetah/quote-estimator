@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { City } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '@prisma';
 import { CreateCityDTO } from './dto/create-city.dto';
 import { UpdateCityDTO } from './dto/update-city.dto';
 

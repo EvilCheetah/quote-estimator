@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Country } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '@prisma';
 import { CreateCountryDTO } from './dto/create-country.dto';
 import { UpdateCountryDTO } from './dto/update-country.dto';
 

@@ -1,7 +1,7 @@
-import { Make } from '@prisma/client';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
 
+import { Make } from '@prisma/client';
+import { PrismaService } from '@prisma';
 import { CreateMakeDTO } from './dto/create-make.dto';
 import { UpdateMakeDTO } from './dto/update-make.dto';
 
