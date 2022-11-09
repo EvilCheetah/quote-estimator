@@ -18,7 +18,14 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-        "@common/*":    ["src/common/*"],
+        "@auth":        ["src/auth/index"],
+        "@constant":    ["src/common/constant/index"],
+        "@dto":         ["src/common/dto/index"],
+        "@decorator":   ["src/common/decorator/index"],
+        "@guard":       ["src/common/guard/index"],
+        "@interface":   ["src/common/interface/index"],
+        "@types":       ["src/common/types/index"],
+        "@users":       ["src/users/index"],
 
         "@constant/*":  ["src/common/constant/*"],
         "@dto/*":       ["src/common/dto/*"],
@@ -27,14 +34,7 @@
         "@interface/*": ["src/common/interface/*"],
         "@types/*":     ["src/common/types/*"],
 
-        "@auth":        ["src/auth/index"],
-        "@constant":    ["src/common/constant/index"],
-        "@dto":         ["src/common/dto/index"],
-        "@decorator":   ["src/common/decorator/index"],
-        "@guard":       ["src/common/guard/index"],
-        "@interface":   ["src/common/interface/index"],
-        "@types":       ["src/common/types/index"],
-        "@users":       ["src/users/index"]
+        "@common/*":    ["src/common/*"]
     },
   }
 }
