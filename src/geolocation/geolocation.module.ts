@@ -3,6 +3,7 @@ import { CityModule } from './city/city.module';
 import { StateModule } from './state/state.module';
 import { CountryModule } from './country/country.module';
 import { PostalCodeModule } from './postal-code/postal-code.module';
+import { DistanceModule } from './distance/distance.module';
 
 
 @Module({
@@ -11,6 +12,7 @@ import { PostalCodeModule } from './postal-code/postal-code.module';
         StateModule,
         CityModule,
         PostalCodeModule,
+        DistanceModule,
     ]
 })
 export class GeolocationModule {}
