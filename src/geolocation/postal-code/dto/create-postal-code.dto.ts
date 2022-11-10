@@ -1,13 +1,13 @@
 import { IsLatitude, IsLongitude, IsPostalCode } from "class-validator";
-import { IsNonNegative } from "@decorator";
+import { IsID } from "@decorator";
 
 
 export class CreatePostalCodeDTO
 {
-    @IsNonNegative()
+    @IsID()
     city_id: number;
 
-    @IsPostalCode()
+    @IsPostalCode('any')
     postal_code_value: string;
 
     @IsLatitude()
