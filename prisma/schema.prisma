@@ -133,8 +133,6 @@ model PostalCode {
 }
 
 model Distance {
-    distance_id                 Int   @id @default(autoincrement())
-
     first_postal_code_node      PostalCode @relation("position_one", fields: [first_postal_code_node_id], references: [postal_code_id], onDelete: Cascade)
     first_postal_code_node_id   Int
 
@@ -144,6 +142,6 @@ model Distance {
     ground_distance             Float
 
 
-    @@unique([first_postal_code_node_id, second_postal_code_node_id])
+    @@id([first_postal_code_node_id, second_postal_code_node_id])
     @@map("postal-to-postal-distance")
 }
