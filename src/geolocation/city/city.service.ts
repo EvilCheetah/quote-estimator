@@ -15,13 +15,8 @@ export class CityService
 
     create(createCityDTO: CreateCityDTO): Promise<City>
     {
-        const { state_id, state_abbreviation, ...city_data } = createCityDTO;
-
         return this.prisma.city.create({
-            data: {
-                ...city_data,
-                state: { connect: { state_id, state_abbreviation } },
-            }
+            data: createCityDTO
         });
     }
 
