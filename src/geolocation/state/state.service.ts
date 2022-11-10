@@ -15,15 +15,8 @@ export class StateService
 
     create(createStateDTO: CreateStateDTO): Promise<State>
     {
-        const { country_id, country_abbreviation, ...state_data } = createStateDTO;
-
         return this.prisma.state.create({
-            data: {
-                ...state_data,
-                country: { 
-                    connect: { country_id, country_abbreviation }
-                },
-            }
+            data: createStateDTO
         });
     }
 

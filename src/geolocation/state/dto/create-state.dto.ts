@@ -1,17 +1,11 @@
-import { IsNonNegative } from "@decorator";
-import { IsInt, IsString, Length, ValidateIf } from "class-validator";
+import { IsString, Length } from "class-validator";
+import { IsID } from "@decorator";
 
 
 export class CreateStateDTO
 {
-    @ValidateIf( (o) => (o.country_abbreviation == undefined) )
-    @IsInt()
-    @IsNonNegative()
-    country_id: number;
-
-    @ValidateIf( (o) => (o.country_id == undefined) )
-    @IsString()
-    country_abbreviation: string;
+    @IsID()
+    country_id:         number;
     
     @IsString()
     state_name:         string;
