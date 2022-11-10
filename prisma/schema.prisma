@@ -133,18 +133,17 @@ model PostalCode {
 }
 
 model Distance {
-    distance_id  Int   @id @default(autoincrement())
+    distance_id                 Int   @id @default(autoincrement())
 
-    postal_code_one PostalCode @relation("position_one", fields: [position_one], references: [postal_code_id], onDelete: Cascade)
-    position_one    Int
+    first_postal_code_node      PostalCode @relation("position_one", fields: [first_postal_code_node_id], references: [postal_code_id], onDelete: Cascade)
+    first_postal_code_node_id   Int
 
-    postal_code_two PostalCode @relation("position_two", fields: [position_two], references: [postal_code_id], onDelete: Cascade)
-    position_two    Int
+    second_postal_code_node     PostalCode @relation("position_two", fields: [second_postal_code_node_id], references: [postal_code_id], onDelete: Cascade)
+    second_postal_code_node_id  Int
 
-    air_distance    Float
-    ground_distance Float
+    ground_distance             Float
 
 
-    @@unique([position_one, position_two])
+    @@unique([first_postal_code_node_id, second_postal_code_node_id])
     @@map("postal-to-postal-distance")
 }
