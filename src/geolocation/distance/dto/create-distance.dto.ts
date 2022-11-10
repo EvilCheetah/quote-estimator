@@ -1,4 +1,4 @@
-import { IsNumber } from "class-validator";
+import { IsNumber, IsOptional } from "class-validator";
 import { IsID } from "@decorator";
 
 
@@ -11,5 +11,6 @@ export class CreateDistanceDTO
     node_two:           number;
 
     @IsNumber()
+    @IsOptional()
     ground_distance:    number;
 }

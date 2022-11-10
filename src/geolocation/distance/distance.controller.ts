@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Delete } from '@nestjs/common';
 import { DistanceService } from './distance.service';
 import { CreateDistanceDTO } from './dto/create-distance.dto';
-import { UpdateDistanceDTO } from './dto/update-distance.dto';
 
-@Controller('distance')
+
+@Controller('distance-edge')
 export class DistanceController
 {
     constructor(
@@ -21,42 +21,39 @@ export class DistanceController
     }
 
 
-    @Get()
+    @Get('all')
     findAll()
     {
         return this.distanceService.findAll();
     }
 
 
-    @Get(':id')
+    @Get()
     findOne(
-        @Param('id', ParseIntPipe)
-        distance_id: number
-    )
-    {
-        return this.distanceService.findOne(distance_id);
-    }
-
-
-    @Patch(':id')
-    update(
-        @Param('id', ParseIntPipe)
-        distance_id: number,
-
         @Body()
-        updateDistanceDTO: UpdateDistanceDTO
+        distanceDTO: CreateDistanceDTO
     )
     {
-        return this.distanceService.update(distance_id, updateDistanceDTO);
+        return this.distanceService.findOne(distanceDTO);
     }
 
 
-    @Delete(':id')
-    remove(
-        @Param('id')
-        distance_id: number 
+    @Patch()
+    update(
+        @Body()
+        updateDistanceDTO: CreateDistanceDTO
     )
     {
-        return this.distanceService.remove(distance_id);
+        return this.distanceService.update(updateDistanceDTO);
+    }
+
+
+    @Delete()
+    remove(
+        @Body()
+        distanceDTO: CreateDistanceDTO
+    )
+    {
+        return this.distanceService.remove(distanceDTO);
     }
 }
