@@ -5,11 +5,11 @@ import { IsID } from "@decorator";
 export class CreateDistanceDTO
 {
     @IsID()
-    first_postal_code_node_id:  number;
+    node_one:           number;
 
     @IsID()
-    second_postal_code_node_id: number;
+    node_two:           number;
 
     @IsNumber()
-    ground_distance:            number;
+    ground_distance:    number;
 }
