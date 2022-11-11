@@ -124,24 +124,24 @@ model PostalCode {
     latitude            Float
     longitude           Float
 
-    positions_one       Distance[] @relation("position_one")
-    positions_two       Distance[] @relation("position_two")
+    positions_one       Edges[] @relation("position_one")
+    positions_two       Edges[] @relation("position_two")
 
 
     @@unique([postal_code_value])
     @@map("postal-code")
 }
 
-model Distance {
-    first_postal_code_node      PostalCode @relation("position_one", fields: [first_postal_code_node_id], references: [postal_code_id], onDelete: Cascade)
-    first_postal_code_node_id   Int
+model Edges {
+    node            PostalCode @relation("position_one", fields: [node_id], references: [postal_code_id], onDelete: Cascade)
+    node_id         Int
 
-    second_postal_code_node     PostalCode @relation("position_two", fields: [second_postal_code_node_id], references: [postal_code_id], onDelete: Cascade)
-    second_postal_code_node_id  Int
+    child           PostalCode @relation("position_two", fields: [child_node_id], references: [postal_code_id], onDelete: Cascade)
+    child_node_id   Int
 
-    ground_distance             Float
+    ground_distance Float
 
 
-    @@id([first_postal_code_node_id, second_postal_code_node_id])
-    @@map("postal-to-postal-distance")
+    @@id([node_id, child_node_id])
+    @@map("postal-code-edges")
 }
