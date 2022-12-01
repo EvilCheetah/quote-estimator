@@ -124,15 +124,15 @@ model PostalCode {
     latitude            Float
     longitude           Float
 
-    positions_one       Edges[] @relation("position_one")
-    positions_two       Edges[] @relation("position_two")
+    positions_one       PostalEdge[] @relation("position_one")
+    positions_two       PostalEdge[] @relation("position_two")
 
 
     @@unique([postal_code_value])
     @@map("postal-code")
 }
 
-model Edges {
+model PostalEdge {
     node            PostalCode @relation("position_one", fields: [node_id], references: [postal_code_id], onDelete: Cascade)
     node_id         Int
 
