@@ -30,6 +30,7 @@
 
         "@constant/*":  ["src/common/constant/*"],
         "@dto/*":       ["src/common/dto/*"],
+        "@class/*":     ["src/common/class/*"],
         "@decorator/*": ["src/common/decorator/*"],
         "@guard/*":     ["src/common/guard/*"],
         "@interface/*": ["src/common/interface/*"],
