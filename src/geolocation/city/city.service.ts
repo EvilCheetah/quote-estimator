@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 
-import { City } from '@prisma/client';
+import { City, Prisma } from '@prisma/client';
 import { PrismaService } from '@prisma';
 import { CreateCityDTO } from './dto/create-city.dto';
 import { UpdateCityDTO } from './dto/update-city.dto';
@@ -9,20 +9,36 @@ import { UpdateCityDTO } from './dto/update-city.dto';
 @Injectable()
 export class CityService
 {
+    private readonly logger = new Logger(CityService.name);
+
     constructor(
         private readonly prisma: PrismaService
     ) {}
 
-    create(createCityDTO: CreateCityDTO): Promise<City>
+    create({ city_name, state_id }: CreateCityDTO): Promise<City>
     {
-        return this.prisma.city.create({
-            data: createCityDTO
-        });
+        try
+        {
+            return this.prisma.city.create({
+                data: { city_name, state_id }
+            });
+        }
+
+        catch (e)
+        {
+            if (e instanceof Prisma.PrismaClientKnownRequestError)
+            {
+                if (e.code === 'P2002')
+                    this.logger.debug(`State (city_name:state_id): "${city_name}":"${state_id}" already EXISTS`)
+            }
+        }
     }
 
-    findAll(): Promise<City[]>
+    findAll()
     {
-        return this.prisma.city.findMany();
+        return this.prisma.city.findMany({
+            select: { city_name: true, postal_codes: true }
+        });
     }
 
     async findOne(city_id: number): Promise<City>

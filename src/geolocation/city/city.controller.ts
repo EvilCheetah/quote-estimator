@@ -22,7 +22,7 @@ export class CityController
 
 
     @Get()
-    findAll(): Promise<City[]>
+    findAll()
     {
         return this.cityService.findAll();
     }
