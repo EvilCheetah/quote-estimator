@@ -25,7 +25,7 @@ import { GeolocationModule } from './geolocation/geolocation.module';
         GeolocationModule,
     ],
     providers: [
-        { provide: APP_GUARD, useClass: JwtAuthGuard }
+        // { provide: APP_GUARD, useClass: JwtAuthGuard }
     ]
 })
 export class AppModule {}
