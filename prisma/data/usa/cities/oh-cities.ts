@@ -1,4 +1,7 @@
-export const OH_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const OH_CITIES: Cities = [
 	["Aberdeen",                  "OH"],
 	["Ada",                       "OH"],
 	["Adams County",              "OH"],

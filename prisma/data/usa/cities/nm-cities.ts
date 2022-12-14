@@ -1,4 +1,7 @@
-export const NM_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const NM_CITIES: Cities = [
 	["Abiquiu",                    "NM"],
 	["Acoma",                      "NM"],
 	["Alameda",                    "NM"],

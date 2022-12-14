@@ -1,4 +1,7 @@
-export const PR_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const PR_CITIES: Cities = [
 	["Adjuntas",         "PR"],
 	["Aguada",           "PR"],
 	["Aguadilla",        "PR"],

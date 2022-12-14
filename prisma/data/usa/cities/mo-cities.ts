@@ -1,4 +1,7 @@
-export const MO_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const MO_CITIES: Cities = [
 	["Adrian",                     "MO"],
 	["Advance",                    "MO"],
 	["Affton",                     "MO"],

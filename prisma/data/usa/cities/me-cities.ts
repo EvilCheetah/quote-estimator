@@ -1,4 +1,7 @@
-export const ME_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const ME_CITIES: Cities = [
 	["Abbot",                      "ME"],
 	["Acton",                      "ME"],
 	["Adamstown Twp",              "ME"],

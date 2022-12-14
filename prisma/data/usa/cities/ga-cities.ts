@@ -1,4 +1,7 @@
-export const GA_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const GA_CITIES: Cities = [
 	["Abac",                    "GA"],
 	["Abbeville",               "GA"],
 	["Abraham Baldwin College", "GA"],

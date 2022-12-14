@@ -1,4 +1,7 @@
-export const AZ_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const AZ_CITIES: Cities = [
 	["Aguila",                         "AZ"],
 	["Ajo",                            "AZ"],
 	["Alpine",                         "AZ"],

@@ -1,4 +1,7 @@
-export const GU_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const GU_CITIES: Cities = [
 	["Agana Heights", "GU"],
 	["Agat",          "GU"],
 	["Asan",          "GU"],

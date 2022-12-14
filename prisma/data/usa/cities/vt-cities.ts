@@ -1,4 +1,7 @@
-export const VT_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const VT_CITIES: Cities = [
 	["Adamant",              "VT"],
 	["Addison",              "VT"],
 	["Albany",               "VT"],

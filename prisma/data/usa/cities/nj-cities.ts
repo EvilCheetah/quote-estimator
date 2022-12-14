@@ -1,4 +1,7 @@
-export const NJ_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const NJ_CITIES: Cities = [
 	["Aberdeen",                  "NJ"],
 	["Absecon",                   "NJ"],
 	["Allamuchy",                 "NJ"],

@@ -1,4 +1,7 @@
-export const ND_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const ND_CITIES: Cities = [
     ["Abercrombie",        "ND"],
 	["Absaraka",           "ND"],
 	["Ada Township",       "ND"],

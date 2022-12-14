@@ -1,4 +1,7 @@
-export const OK_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const OK_CITIES: Cities = [
 	["Achille",             "OK"],
 	["Ada",                 "OK"],
 	["Adair",               "OK"],

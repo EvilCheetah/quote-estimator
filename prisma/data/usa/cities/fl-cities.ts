@@ -1,4 +1,7 @@
-export const FL_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const FL_CITIES: Cities = [
 	["Alachua",                    "FL"],
 	["Alafaya",                    "FL"],
 	["Alford",                     "FL"],

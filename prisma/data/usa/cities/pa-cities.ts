@@ -1,4 +1,7 @@
-export const PA_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const PA_CITIES: Cities = [
 	["Aaronsburg",                "PA"],
 	["Abbottstown",               "PA"],
 	["Abington",                  "PA"],

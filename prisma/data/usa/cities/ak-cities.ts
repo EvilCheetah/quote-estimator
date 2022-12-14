@@ -1,4 +1,7 @@
-export const AK_CITIES = [
+import { Cities } from "prisma/data/types/cities.type";
+
+
+export const AK_CITIES: Cities = [
 	["Adak",                 "AK"],
 	["Akhiok",               "AK"],
     ["Akiachak",             "AK"],
