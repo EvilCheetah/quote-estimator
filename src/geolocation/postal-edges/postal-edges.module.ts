@@ -4,6 +4,6 @@ import { PostalEdgesController } from './postal-edges.controller';
 
 @Module({
   controllers: [PostalEdgesController],
-  providers: [PostalEdgesService]
+  providers:   [PostalEdgesService]
 })
 export class PostalEdgesModule {}
