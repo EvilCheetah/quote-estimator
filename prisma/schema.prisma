@@ -118,8 +118,8 @@ model PostalCode {
     postal_code_id      Int       @id @default(autoincrement())
     postal_code_value   String
 
-    city                City      @relation(fields: [city_id], references: [city_id], onDelete: Cascade)
-    city_id             Int
+    city                City?      @relation(fields: [city_id], references: [city_id], onDelete: Cascade)
+    city_id             Int?
 
     latitude            Float
     longitude           Float
@@ -139,7 +139,8 @@ model PostalEdge {
     child           PostalCode @relation("position_two", fields: [child_node_id], references: [postal_code_id], onDelete: Cascade)
     child_node_id   Int
 
-    ground_distance Float
+    land_distance   Float
+    water_distance  Float
 
 
     @@id([node_id, child_node_id])
