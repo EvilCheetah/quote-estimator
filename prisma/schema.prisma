@@ -30,11 +30,19 @@ model User {
 }
 
 //--------------------- Vehicle Schema ---------------------//
+model VehicleType {
+    vehicle_type_id   Int @id @default(autoincrement())
+    vehicle_type_name String
+
+    models            Model[]
+
+    @@unique([vehicle_type_name])
+    @@map("vehicle-type")
+}
+
 model Make {
     make_id     Int     @id @default(autoincrement())
-    
     make_name   String
-    year        Int
 
     models      Model[]
 
@@ -44,15 +52,21 @@ model Make {
 }
 
 model Model {
-    model_id    Int         @id @default(autoincrement())
-    model_name  String
+    model_id        Int         @id @default(autoincrement())
+    model_name      String
+    full_model_name String
+    year            Int
 
-    make        Make        @relation(fields: [make_id], references: [make_id], onDelete: Cascade)
-    make_id     Int
+    vehicle_type    VehicleType @relation(fields: [vehicle_type_id], references: [vehicle_type_id], onDelete: Cascade)
+    vehicle_type_id Int
 
-    dimensions  Dimensions?
-    weight      Int
+    make            Make        @relation(fields: [make_id], references: [make_id], onDelete: Cascade)
+    make_id         Int
 
+    dimensions      Dimensions?
+    weight          Int?
+
+    quotes          Quote[]
 
     @@unique([make_id, model_name])
     @@map("vehicle-model")
@@ -81,10 +95,30 @@ model Country {
     country_abbreviation String @unique
 
     states               State[]
+    postal_codes         PostalCode[]
 
 
     @@map("country")
 }
+
+
+model PostalCode {
+    postal_code_id      Int       @id @default(autoincrement())
+    postal_code_value   String
+
+    country             Country?      @relation(fields: [country_id], references: [country_id], onDelete: Cascade)
+    country_id          Int?
+
+    latitude            Float
+    longitude           Float
+
+    cities              PostalCodesInCities[]
+
+
+    @@unique([postal_code_value])
+    @@map("postal-code")
+}
+
 
 model State {
     state_id            Int     @id @default(autoincrement())
@@ -107,42 +141,69 @@ model City {
     state           State   @relation(fields: [state_id], references: [state_id], onDelete: Cascade)
     state_id        Int
 
-    postal_codes    PostalCode[]
+    latitude        Float
+    longitude       Float
 
+    postal_codes    PostalCodesInCities[]
 
     @@unique([state_id, city_name])
     @@map("city")
 }
 
-model PostalCode {
-    postal_code_id      Int       @id @default(autoincrement())
-    postal_code_value   String
-
-    city                City?      @relation(fields: [city_id], references: [city_id], onDelete: Cascade)
-    city_id             Int?
-
-    latitude            Float
-    longitude           Float
-
-    positions_one       PostalEdge[] @relation("position_one")
-    positions_two       PostalEdge[] @relation("position_two")
 
 
-    @@unique([postal_code_value])
-    @@map("postal-code")
+model PostalCodesInCities {
+    postal_code    PostalCode   @relation(fields: [postal_code_id], references: [postal_code_id])
+    postal_code_id Int
+
+    city           City         @relation(fields: [city_id], references: [city_id])
+    city_id        Int
+
+
+    @@id([city_id, postal_code_id])
+    @@map("postal-codes-in-cities")
 }
 
-model PostalEdge {
-    node            PostalCode @relation("position_one", fields: [node_id], references: [postal_code_id], onDelete: Cascade)
-    node_id         Int
+//------------------------ Quote Schema ------------------------//
+model QuoteVariable {
+    quote_variable_id   Int         @id @default(autoincrement())
+    created_at          DateTime    @default(now())
 
-    child           PostalCode @relation("position_two", fields: [child_node_id], references: [postal_code_id], onDelete: Cascade)
-    child_node_id   Int
+    coefficient         Float
+    power               Float
+    base_price          Float
+    inoperational_fee   Float
+    enclosed_fee        Float
 
-    land_distance   Float
-    water_distance  Float
+
+    @@map("quote-variables")
+}
+
+model Quote {
+    quote_id         String   @id @default(uuid())
+    
+    created_at       DateTime @default(now())
+    updated_at       DateTime @updatedAt
+
+    email            String
+    phone_number     String?
+    reservation      String?
+    exact_date       DateTime?
+
+    vehicle_model_id Int
+    is_operational   Boolean
+    is_enclosed      Boolean
+
+    from_lat         Float
+    from_long        Float
+    to_lat           Float
+    to_long          Float
+
+    distance         Float?
+    quote_estimate   Float
+
+    vehicle_model    Model  @relation(fields: [vehicle_model_id], references: [model_id])
 
 
-    @@id([node_id, child_node_id])
-    @@map("postal-code-edges")
+    @@map("quotes")
 }
