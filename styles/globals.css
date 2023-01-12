@@ -1,3 +1,36 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+form {
+    font-size: clamp(0.85em, 2.5vw, 1.5em);
+    background: #bac8ff;
+    padding: 2em 3em;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.address {
+    display: flex;
+    gap: 0.25em;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.text-input {
+    padding: 0.35em 1.5em;
+    border-radius: 0.75em;
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.option {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25em;
+}
