@@ -4,5 +4,9 @@ import { Coordinates } from '../../../src/common/interface/coordinates.interface
 
 export interface IPostalCode
 {
-    [key: PostalCode]: Coordinates;
+    postal_code: string;
+
+    latitude:    string;
+
+    longitude:   string;
 }

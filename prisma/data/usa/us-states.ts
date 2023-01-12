@@ -1,7 +1,7 @@
-import { Cities } from "../types/cities.type";
 import { CountryAbbreviation } from "../types/country-abbreviation.type";
 import { StateAbbreviation } from "../types/state-abbreviation.type";
 import { StateName } from "../types/state-name.type";
+import { City } from '../interface/city.interface';
 import { 
 	AK_CITIES,
 	AL_CITIES,
@@ -65,7 +65,7 @@ export type US_State = [
     CountryAbbreviation,
     StateName,
     StateAbbreviation,
-    Cities
+    City[]
 ];
 
 export const US_STATES: US_State[] = [
