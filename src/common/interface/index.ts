@@ -1,4 +1,5 @@
 export * from './dimensions.interface';
+export * from './coordinates.interface';
 
 export * from './jwt-tokens.interface';
 export * from './jwt-payload.interface';
