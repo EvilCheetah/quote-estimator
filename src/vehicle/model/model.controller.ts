@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query } from '@nestjs/common';
 
 import { ModelDTO } from './dto/model.dto';
+import { ModelQuery } from './dto/model.query';
 import { ModelService } from './model.service';
 
 
@@ -14,28 +15,36 @@ export class ModelController
     
     @Post()
     create(
-        @Body() 
+        @Body()
         createModelDTO: ModelDTO
     )
     {
         return this.modelService.create(createModelDTO);
     }
 
+    @Get('years')
+    get_all_years()
+    {
+        return this.modelService.get_all_years();
+    }
 
     @Get()
-    findAll()
+    find_all(
+        @Query()
+        query: ModelQuery
+    )
     {
-        return this.modelService.findAll();
+        return this.modelService.find_all(query);
     }
 
 
     @Get(':id')
-    findOne(
+    find_one(
         @Param('id', ParseIntPipe)
         model_id: number
     )
     {
-        return this.modelService.findOne(model_id);
+        return this.modelService.find_one(model_id);
     }
 
 
