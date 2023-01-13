@@ -5,8 +5,7 @@ import { IsID } from "@decorator";
 export class CreatePostalCodeDTO
 {
     @IsID()
-    @IsOptional()
-    city_id: number;
+    country_id: number;
 
     @IsPostalCode('any')
     postal_code_value: string;
