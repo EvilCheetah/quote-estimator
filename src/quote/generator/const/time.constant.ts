@@ -1,0 +1,1 @@
+export const MORE_THAN_30_DAYS: number = 30 * 24 * 60 * 60 * 1000;
