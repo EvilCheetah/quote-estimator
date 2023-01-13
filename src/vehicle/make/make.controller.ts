@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query } from '@nestjs/common';
 
 import { Make } from '@prisma/client';
+import { MakeDTO } from './dto/make.dto';
+import { MakeQuery } from './dto/make.query';
 import { MakeService } from './make.service';
-import { CreateMakeDTO } from './dto/create-make.dto';
-import { UpdateMakeDTO } from './dto/update-make.dto';
 
 
 @Controller('make')
@@ -17,17 +17,19 @@ export class MakeController
     @Post()
     async create(
         @Body()
-        createMakeDTO: CreateMakeDTO
+        makeDTO: MakeDTO
     ): Promise<Make>
     {
-        return this.makeService.create(createMakeDTO);
+        return this.makeService.create(makeDTO);
     }
 
-
     @Get()
-    async find_all(): Promise<Make[]>
+    async find_all(
+        @Query()
+        query: MakeQuery
+    ): Promise<Make[]>
     {
-        return this.makeService.find_all();
+        return this.makeService.find_all(query);
     }
 
 
@@ -47,10 +49,10 @@ export class MakeController
         make_id: number,
         
         @Body()
-        updateMakeDTO: UpdateMakeDTO
+        makeDTO: MakeDTO
     ): Promise<Make>
     {
-        return this.makeService.update(make_id, updateMakeDTO);
+        return this.makeService.update(make_id, makeDTO);
     }
 
     
