@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 
 import { City, Prisma } from '@prisma/client';
 import { PrismaService } from '@prisma';
@@ -15,12 +15,12 @@ export class CityService
         private readonly prisma: PrismaService
     ) {}
 
-    create({ city_name, state_id }: CreateCityDTO): Promise<City>
+    create(createCityDTO: CreateCityDTO): Promise<City>
     {
         try
         {
             return this.prisma.city.create({
-                data: { city_name, state_id }
+                data: createCityDTO
             });
         }
 
@@ -29,7 +29,9 @@ export class CityService
             if (e instanceof Prisma.PrismaClientKnownRequestError)
             {
                 if (e.code === 'P2002')
-                    this.logger.debug(`State (city_name:state_id): "${city_name}":"${state_id}" already EXISTS`)
+                    throw new ConflictException(
+                        `City '${createCityDTO.city_name}' in state '${createCityDTO.state_id}' already EXISTS`
+                    )
             }
         }
     }
