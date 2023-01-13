@@ -1,3 +1,5 @@
+export * from './variables/mi-to-m.constant';
+
 export * from './model-options.query';
 
 export * from './pattern/username.pattern';
