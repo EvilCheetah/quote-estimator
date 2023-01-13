@@ -1,0 +1,22 @@
+.vehicle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.vehicle input {
+    font-size: 0.75em;
+    
+}
+
+.vehicle input::-webkit-inner-spin-button,
+.vehicle input::-webkit-outer-spin-button
+{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.vehicle input[type=number] {
+    -moz-appearance: textfield;
+}

@@ -1,0 +1,20 @@
+.button {
+    border-radius: 1em;
+    padding: 1em 2em;
+}
+
+.button:only-child {
+    margin-left: auto;
+}
+
+.next {
+    background-color: var(--blue);
+}
+
+.previous {
+    background-color: var(--gray);
+}
+
+.submit {
+    background-color: var(--green);
+}

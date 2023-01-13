@@ -1,0 +1,12 @@
+.shipping-form {
+    background-color: #94d82d;
+    font-size: 2em;
+    padding: 2em 3em;
+    border-radius: 1em;
+}
+
+.form-navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
