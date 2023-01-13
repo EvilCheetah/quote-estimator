@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { GeolocationModule } from './geolocation/geolocation.module';
+import { QuoteModule } from './quote/quote.module';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { GeolocationModule } from './geolocation/geolocation.module';
         /// Services Imports
         VehicleModule,
         GeolocationModule,
+        QuoteModule,
     ],
     providers: [
         // { provide: APP_GUARD, useClass: JwtAuthGuard }
